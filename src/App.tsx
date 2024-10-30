@@ -1,10 +1,9 @@
 import React from 'react';
+import RootRoutes from './routes/RootRoutes';
 
 const App = () => {
   return (
-    <div className="App">
-      <h1>click clean</h1>
-    </div>
+    <RootRoutes />
   );
 };
 
