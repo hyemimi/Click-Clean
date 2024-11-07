@@ -1,18 +1,30 @@
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
+import styled from 'styled-components';
+import NavHeader from 'layouts/MainPageLayout/Header';
 
 const MainPageLayout = () => {
 
   return (
-    <div>
-      <Header />
-      <div>
+    <Container>
+      <NavHeader />
+      <PageContainer>
         <Outlet />
-      </div>
-      <footer>Click-Clean</footer>
-    </div>
+      </PageContainer>
+    </Container>
    
   );
 };
   
 export default MainPageLayout;
+
+const Container = styled.div`
+`;
+
+const PageContainer = styled.div`
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    padding: 16px;
+  }
+`;

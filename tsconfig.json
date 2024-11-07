@@ -18,24 +18,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
-  },
-  "include": [
-    "src"
-  ],
-  "baseUrl": "src", // import 기본 경로
-		"paths": {
-				// src 하위 디렉토리에 맞춰서 경로 설정
-				"@Types/*": ["@Types/*"],
-	      "apis/*": ["apis/*"],
-	      "assets/*": ["assets/*"],
-	      "components/*": ["components/*"],
-	      "layouts/*": ["layouts/*"],
-	      "pages/*": ["pages/*"],
-	      "routes/*": ["routes/*"],
-	      "store/*": ["store/*"]
-				// ....
-
-				// 추가되는 디렉토리가 있다면 위 규칙에 맞춰 추가할 것
-		}
+    "jsx": "react-jsx",
+     /* custom */
+     "baseUrl": "src",
+     "paths": {
+       "@Types/*": ["@Types/*"],
+       "apis/*": ["apis/*"],
+       "assets/*": ["assets/*"],
+       "components/*": ["components/*"],
+       "pages/*": ["pages/*"],
+       "routes/*": ["routes/*"],
+       "styles/*": ["styles/*"]
+     }
+  }
 }
