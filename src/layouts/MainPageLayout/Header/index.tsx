@@ -8,14 +8,14 @@ const NavHeader = () => {
   return (
     <>
       <Header>
-        <FlexDiv>
+        <HeaderItemDiv>
           <img src={Logo} width={20} height={20} />
           <LogoName>ClickClean</LogoName>
-        </FlexDiv>
-        <FlexDiv>
+        </HeaderItemDiv>
+        <HeaderItemDiv>
           <img src={UserIcon} width={30} height={30} />
           <LoginTextButton>로그인</LoginTextButton>
-        </FlexDiv>
+        </HeaderItemDiv>
  
       </Header>
     </>
@@ -25,13 +25,17 @@ const NavHeader = () => {
 export default NavHeader;
 
 const Header = styled.div`
-    padding: 2px 18px;
+    width: 100%;
     color: #FFFFFF;
-    display: flex;
+    display: flex;                    
     justify-content: space-between;
     height: 44px;
-    font-size: 24px;
+    font-size: 24px ;
     background-color: #1D222D;
+
+    @media (max-width: 768px) {
+    justify-content: space-around
+  }
 `;
 
 const LogoName = styled.h1`
@@ -40,4 +44,8 @@ const LogoName = styled.h1`
 
 const LoginTextButton = styled.p`
     font-size: 12px;
+`;
+
+const HeaderItemDiv = styled(FlexDiv)`
+  padding: 2px 12px;
 `;

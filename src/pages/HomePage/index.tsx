@@ -4,17 +4,18 @@ import styled from 'styled-components';
 import ArticleCard from 'components/ArticleCard';
 import CategoryTab from 'components/CategoryTab';
 import articleImage1 from 'assets/tempImage1.jpg';
+import { FlexDiv } from 'styles/div/FlexDiv';
 
 const categories = ['경제', '연예', '정치', '사회', '세계', 'IT/과학', '생활문화'];
 
 const articles = [
-  { title: '영하 3도 \'입동 추위\' 절정 찍었다…내일 추위 풀려도 일교차 여전', content: 'Content of Article 1', credibility: 76, image: articleImage1 },
-  { title: 'Article 2', content: 'Content of Article 2', credibility: 95 },
-  { title: 'Article 3', content: 'Content of Article 3', credibility: 50 },
-  { title: 'Article 3', content: 'Content of Article 3', credibility: 52 },
-  { title: 'Article 3', content: 'Content of Article 3', credibility: 70 },
-  { title: 'Article 3', content: 'Content of Article 3', credibility: 40 },
-  { title: 'Article 3', content: 'Content of Article 3', credibility: 93 }
+  { title: '영하 3도 \'입동 추위\' 절정 찍었다…내일 추위 풀려도 일교차 여전', content: 'Content of Article 1', probability: 76, image: articleImage1 },
+  { title: 'Article 2', content: 'Content of Article 2', probability: 95 },
+  { title: 'Article 3', content: 'Content of Article 3', probability: 50 },
+  { title: 'Article 3', content: 'Content of Article 3', probability: 52 },
+  { title: 'Article 3', content: 'Content of Article 3', probability: 70 },
+  { title: 'Article 3', content: 'Content of Article 3', probability: 40 },
+  { title: 'Article 3', content: 'Content of Article 3', probability: 93 }
   // Add more articles as needed
 ];
 
@@ -40,7 +41,7 @@ const HomePage: React.FC = () => {
             key={index}
             title={article.title}
             content={article.content}
-            credibility={article.credibility}
+            probability ={article.probability}
           />
         ))}
       </ArticleGrid>
@@ -55,7 +56,7 @@ const Container = styled.div`
   margin: 0 auto;
 
   @media (max-width: 768px) {
-    padding: 16px;
+    padding: 12px 12px;
   }
 `;
 
@@ -70,7 +71,7 @@ const SearchBar = styled.input`
   margin-bottom: 16px;
 
   @media (max-width: 768px) {
-    padding: 10px;
+    padding: 4px;
     font-size: 14px;
   }
 `;
@@ -81,6 +82,6 @@ const ArticleGrid = styled.div`
   gap: 16px;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   }
 `;

@@ -4,15 +4,15 @@ import styled from 'styled-components';
 interface IArticleCardProps {
     title: string,
     content: string,
-    credibility: number
+    probability: number
     image?: string
 }
 
 // Component
-const ArticleCard: React.FC<IArticleCardProps> = ({ title, content, credibility,image }) => {
+const ArticleCard: React.FC<IArticleCardProps> = ({ title, content, probability, image }) => {
   return (
     <Card>
-      <Badge credibility={credibility}>유사도 {credibility}%</Badge>
+      <Badge probability={probability}>유사도 {probability}%</Badge>
       <Thumbnail image={image}/>
       <Content>
         <Title>{ title.length >= 50 ? title.slice(0,50) + '...' : title }</Title>
@@ -37,6 +37,8 @@ const Card = styled.div`
     transform: translateY(-2px) scale(1.01);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
+
+
 `;
 const Thumbnail = styled.div<{ image ?: string }>`
   width: 150px;
@@ -67,11 +69,11 @@ const Description = styled.p`
   color: #666;
 `;
 
-const Badge = styled.div<{ credibility : number }>`
+const Badge = styled.div<{ probability : number }>`
   position: absolute;
   top: -10px;
   left: -10px;
-  background-color: ${({ credibility }) => credibility >= 80 ? '#A0D5F6' : credibility >= 50 ? '#EFD950' : '#F66161' };
+  background-color: ${({ probability }) => probability >= 80 ? '#A0D5F6' : probability >= 50 ? '#EFD950' : '#F66161' };
   color: white;
   font-size: 0.8rem;
   font-weight: bold;
