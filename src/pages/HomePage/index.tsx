@@ -9,13 +9,7 @@ import { FlexDiv } from 'styles/div/FlexDiv';
 const categories = ['경제', '연예', '정치', '사회', '세계', 'IT/과학', '생활문화'];
 
 const articles = [
-  { title: '영하 3도 \'입동 추위\' 절정 찍었다…내일 추위 풀려도 일교차 여전', content: 'Content of Article 1', probability: 76, image: articleImage1 },
-  { title: 'Article 2', content: 'Content of Article 2', probability: 95 },
-  { title: 'Article 3', content: 'Content of Article 3', probability: 50 },
-  { title: 'Article 3', content: 'Content of Article 3', probability: 52 },
-  { title: 'Article 3', content: 'Content of Article 3', probability: 70 },
-  { title: 'Article 3', content: 'Content of Article 3', probability: 40 },
-  { title: 'Article 3', content: 'Content of Article 3', probability: 93 }
+  { news_id: 1, media: '동아일보', title: '영하 3도  입동 추위 절정 찍었다…내일 추위 풀려도 일교차 여전', content: '어쩌구 저쩌구 왕왕', probability: 76, url: articleImage1 }
   // Add more articles as needed
 ];
 
@@ -36,12 +30,14 @@ const HomePage: React.FC = () => {
       />
       <ArticleGrid>
         {articles.map((article, index) => (
-          <ArticleCard
-            image={article.image}
-            key={index}
-            title={article.title}
-            content={article.content}
-            probability ={article.probability}
+          <ArticleCard 
+            key = {article.news_id}
+            content = {article.content}
+            url = {article.url}
+            news_id = {article.news_id}
+            title = {article.title}
+            media = {article.media}
+            probability = {article.probability}
           />
         ))}
       </ArticleGrid>

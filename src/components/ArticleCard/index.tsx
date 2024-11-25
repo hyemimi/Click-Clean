@@ -1,19 +1,34 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { Badge } from 'styles/badge';
 interface IArticleCardProps {
-    title: string,
     content: string,
-    probability: number
-    image?: string
+    url?: string
+    news_id: number,
+		title: string,
+		media: string,
+		probability: number,
 }
 
 // Component
-const ArticleCard: React.FC<IArticleCardProps> = ({ title, content, probability, image }) => {
+const ArticleCard: React.FC<IArticleCardProps> = ({ 
+  content,
+  url,
+  news_id,
+  title,
+  media,
+  probability }) => {
+
+  const navigate = useNavigate();
+  const ArticlePageHandler = () => {
+    navigate(`/article/${news_id}`);
+  };
+
   return (
-    <Card>
+    <Card onClick={ArticlePageHandler}>
       <Badge probability={probability}>유사도 {probability}%</Badge>
-      <Thumbnail image={image}/>
+      <Thumbnail image={url}/>
       <Content>
         <Title>{ title.length >= 50 ? title.slice(0,50) + '...' : title }</Title>
         <Description>{ title.length >= 80 ? title.slice(0,80) + '...' : title }</Description>
@@ -67,18 +82,6 @@ const Description = styled.p`
   margin: 4px 0 0;
   font-size: 0.6rem;
   color: #666;
-`;
-
-const Badge = styled.div<{ probability : number }>`
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  background-color: ${({ probability }) => probability >= 80 ? '#A0D5F6' : probability >= 50 ? '#EFD950' : '#F66161' };
-  color: white;
-  font-size: 0.8rem;
-  font-weight: bold;
-  padding: 4px 8px;
-  border-radius: 12px;
 `;
 
 export default ArticleCard;
