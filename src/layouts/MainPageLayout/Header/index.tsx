@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Logo from 'assets/logo.png';
 import UserIcon from 'assets/userIcon.png';
-import { FlexDiv } from 'styles/div/FlexDiv';
+import { FlexDiv } from 'styles/common/FlexDiv';
 
 const NavHeader = () => {
 
