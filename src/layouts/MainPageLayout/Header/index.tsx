@@ -1,9 +1,15 @@
 import styled from 'styled-components';
 import Logo from 'assets/logo.png';
 import UserIcon from 'assets/userIcon.png';
+import BookmarkIcon from 'assets/bookmarkIC.png';
 import { FlexDiv } from 'styles/common/FlexDiv';
+import { useNavigate } from 'react-router-dom';
 
 const NavHeader = () => {
+  const navigate = useNavigate();
+  const BookmarkPagehandler = () => {
+    navigate('/bookmark');
+  };
 
   return (
     <>
@@ -15,6 +21,7 @@ const NavHeader = () => {
         <HeaderItemDiv>
           <img src={UserIcon} width={30} height={30} />
           <LoginTextButton>로그인</LoginTextButton>
+          <img src={BookmarkIcon} width={20} height={20} onClick={BookmarkPagehandler}/>
         </HeaderItemDiv>
  
       </Header>
