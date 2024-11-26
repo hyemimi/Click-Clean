@@ -20,6 +20,8 @@ const HomePage: React.FC = () => {
   return (
     <Container>
       <SearchBar placeholder="검색어를 입력하세요" />
+      <RankText isTitle={true}>조회수 급상승 기사</RankText>
+      <RankText isTitle={false}>최태원·노소영 이혼소송 대법원 간다…한숨 돌린 SK</RankText>
       <CategoryTab
         categories={categories}
         activeCategory={activeCategory}
@@ -52,10 +54,17 @@ const SearchBar = styled.input`
   background-color: rgba(217, 217, 217, 0.5);
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 6px;
 
   @media (max-width: 768px) {
     padding: 4px;
     font-size: 14px;
   }
 `;
+
+const RankText = styled.span<({ isTitle?: boolean })>`
+  margin-left: 20px;
+  color:  ${({ isTitle }) => isTitle ? '#F24D4D' : 'black' };
+  font-size: 12px;
+
+`; 
