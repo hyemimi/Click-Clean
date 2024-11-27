@@ -10,6 +10,12 @@ const NavHeader = () => {
   const BookmarkPagehandler = () => {
     navigate('/bookmark');
   };
+  const SubscribePageHandler = () => {
+    navigate('/subscribe');
+  };
+  const LoginPageHandler = () => {
+    navigate('/login');
+  };
 
   return (
     <>
@@ -20,7 +26,8 @@ const NavHeader = () => {
         </HeaderItemDiv>
         <HeaderItemDiv>
           <img src={UserIcon} width={30} height={30} />
-          <LoginTextButton>로그인</LoginTextButton>
+          <TextButton onClick={LoginPageHandler}>로그인</TextButton>
+          <TextButton onClick={SubscribePageHandler}>구독하기</TextButton>
           <img src={BookmarkIcon} width={20} height={20} onClick={BookmarkPagehandler}/>
         </HeaderItemDiv>
  
@@ -49,8 +56,9 @@ const LogoName = styled.h1`
     font-size: 20px;
 `;
 
-const LoginTextButton = styled.p`
+const TextButton = styled.p`
     font-size: 12px;
+    cursor: pointer;
 `;
 
 const HeaderItemDiv = styled(FlexDiv)`

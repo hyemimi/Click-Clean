@@ -8,7 +8,7 @@ import { FlexDiv } from 'styles/common/FlexDiv';
 import { Container } from 'styles/common/container';
 import { ArticleGrid } from 'styles/common/article';
 
-const categories = ['경제', '연예', '정치', '사회', '세계', 'IT/과학', '생활문화'];
+export const categories = ['경제', '연예', '정치', '사회', '세계', 'IT/과학', '생활문화'];
 
 const HomePage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<string>('경제');

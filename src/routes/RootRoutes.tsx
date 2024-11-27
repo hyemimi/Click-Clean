@@ -4,6 +4,7 @@ import MainPageLayout from '../layouts/MainPageLayout';
 import HomePage from '../pages/HomePage';
 import ArticlePage from 'pages/ArticlePage';
 import BookmarkPage from 'pages/BookmarkPage';
+import SubscribePage from 'pages/SubscribePage';
 
 const RootRoutes = () => {
   return (
@@ -13,6 +14,7 @@ const RootRoutes = () => {
           <Route index element={<HomePage />}/>
           <Route path="/article/:news_id" element={<ArticlePage />} />
           <Route path="/bookmark" element={<BookmarkPage />} />
+          <Route path="/subscribe" element={<SubscribePage />} />
         </Route>
       </Routes>
     </BrowserRouter>
