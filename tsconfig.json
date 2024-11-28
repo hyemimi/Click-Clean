@@ -29,6 +29,7 @@
        "pages/*": ["pages/*"],
        "routes/*": ["routes/*"],
        "styles/*": ["styles/*"]
-     }
+     },
+     "types": ["vite/client"]
   }
 }
