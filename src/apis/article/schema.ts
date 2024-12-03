@@ -1,6 +1,6 @@
 export type PostRateReq = {
     value: number;
-    news_id: number;
+    id: number;
 }
 
 export type PostRateRes = {
@@ -17,13 +17,13 @@ export type GetSearchArticlesReq = {
 }
 
 export type PostScrapReq = {
-    news_id: number;
+    id: number;
 }
 
 export type PostScrapRes = {
     
     scrap_id: number;
-    news_id: number;
+    id: number;
     created_at: string;
     user_id: number;
 }
@@ -51,16 +51,16 @@ export type GetArticleListRes = {
     
     totalPages: number,
     page: number,
-    articles : IArticle[];
+    news : IArticle[];
     
 }
 
 export type GetArticleDetailReq = {
-    news_id: number;
+    id: number | undefined;
 }
 
 export type GetArticleDetailRes = {
-    news_id: number,
+    id: number,
     title: string,
     body: string,
     author: string,
@@ -72,7 +72,7 @@ export type GetArticleDetailRes = {
 }
 
 export type GetCommentListReq = {
-    news_id: number,
+    id: number,
     page: number,
     size: number
 }
@@ -91,10 +91,15 @@ export type GetCommentListRes = {
 }
 
 export type PostCommentReq = {
-    news_id: number,
+    id: number,
     content: string
 }
 
 export type PostCommentRes = {
     isSuccess: boolean
+}
+
+export type GetSearchingListReq = {
+    keyword: string,
+    page: number
 }

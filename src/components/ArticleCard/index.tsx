@@ -3,32 +3,34 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge } from 'styles/common/badge';
 export interface IArticleCardProps {
-    content: string,
+    body: string,
     url?: string
-    news_id: number,
+    id: number,
 		title: string,
 		media: string,
 		probability: number,
+    imageUrl: string
 }
 
 // Component
 const ArticleCard: React.FC<IArticleCardProps> = ({ 
-  content,
+  body,
   url,
-  news_id,
+  id,
   title,
   media,
+  imageUrl,
   probability }) => {
 
   const navigate = useNavigate();
   const ArticlePageHandler = () => {
-    navigate(`/article/${news_id}`);
+    navigate(`/article/${id}`);
   };
 
   return (
     <Card onClick={ArticlePageHandler}>
       <Badge probability={probability}>유사도 {probability}%</Badge>
-      <Thumbnail image={url}/>
+      <Thumbnail image={imageUrl}/>
       <Content>
         <Title>{ title.length >= 50 ? title.slice(0,50) + '...' : title }</Title>
         <Description>{ title.length >= 80 ? title.slice(0,80) + '...' : title }</Description>

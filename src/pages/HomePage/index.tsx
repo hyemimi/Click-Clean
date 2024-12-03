@@ -5,7 +5,7 @@ import ArticleCard, { IArticleCardProps } from 'components/ArticleCard';
 import CategoryTab from 'components/CategoryTab';
 import { Container } from 'styles/common/container';
 import { ArticleGrid } from 'styles/common/article';
-import { getArticleList } from 'apis/article';
+import { getArticleList, getSearchingList } from 'apis/article';
 import Pagination from 'components/Pagination';
 import { useQuery } from '@tanstack/react-query';
 import { articles } from 'temp/articles';
@@ -13,28 +13,48 @@ import { articles } from 'temp/articles';
 export const categories = ['경제', '연예', '정치', '사회', '세계', 'IT/과학', '생활문화'];
 
 const HomePage: React.FC = () => {
-  const [category, setCategory] = useState<string>('연예');
+  const [category, setCategory] = useState<string>('경제');
+  const [articles, setArticles] = useState([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0); // 전체 페이지 수 상태
-  
+  const [input, setInput] = useState('');
+  const [keyword, setKeyword] = useState('');
+  const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
   /** 기사 데이터 fetching */
-  // 기사 데이터 fetching
+
+  // 기사 데이터 fetching (카테고리 기반)
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['getAllArticles',{ page,category }], // page나 category가 변경될 때마다 queryFn 실행 
-    queryFn: () => getArticleList({ page, category })
+    queryKey: ['getAllArticles',{ page, category }], // page나 category가 변경될 때마다 queryFn 실행 
+    queryFn: () => getArticleList({ page, category }),
+    enabled: !isSearchActive
+  });
+
+  // 기사 데이터 fetching (검색어 기반)
+  const { data: searchingData, isLoading: isSearchingLoading } = useQuery({
+    queryKey: ['getSearchingList',{ page, keyword }], // page나 category가 변경될 때마다 queryFn 실행 
+    queryFn: () => getSearchingList({ page, keyword }),
+    enabled: isSearchActive
   });
   
   const handleCategorySelect = (category: string) => {
+    setIsSearchActive(false);
     setCategory(category);
-    setPage(1);
   };
 
   // useEffect로 totalPages를 업데이트
   useEffect(() => {
-    console.log(data?.data?.news);
-    if (data?.totalPages) {
-      setTotalPages(data.totalPages); // API 응답에서 totalPages가 있으면 상태 업데이트
+    console.log(page);
+ 
+    if (data?.data?.news) {
+      setArticles(data?.data?.news);
+      setTotalPages(data?.data?.totalPages);
+      setPage(data?.data?.page);
     }
+    else {
+      setArticles([]);
+      setTotalPages(1);
+    }
+   
   }, [data]); // data가 변경될 때마다 실행됨
   // useEffect(() => {
   //   console.log(process.env.REACT_APP_BASE_URL);
@@ -42,14 +62,42 @@ const HomePage: React.FC = () => {
    
   // }, []);
 
+  useEffect(() => {
+    if (searchingData) {
+      setArticles(searchingData?.data);
+      setTotalPages(searchingData?.totalPages);
+      console.log(articles);
+    } else {
+      setArticles([]);
+      setTotalPages(1);
+    }
+    setIsSearchActive(false);
+    setKeyword('');
+   
+  },[searchingData]);
+
   const handlePageChange = (selectedPage: { selected: number }) => {
-    console.log(selectedPage.selected + 1);
     setPage(selectedPage.selected + 1);
+  };
+
+  // Enter 키 이벤트 핸들러
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && input.trim()) {
+      setPage(1);
+      setArticles([]);
+      setIsSearchActive(true); // 검색 활성화
+      setKeyword(input);
+      setInput('');
+    }
   };
 
   return (
     <Container>
-      <SearchBar placeholder="검색어를 입력하세요" />
+      <SearchBar placeholder="검색어를 입력하세요" 
+        type="text"
+        value={input}
+        onKeyDown={handleKeyPress} // Enter 키 이벤트
+        onChange={(e) => setInput(e.currentTarget.value)} />
       <RankText isTitle="true">조회수 급상승 기사</RankText>
       <RankText isTitle="false">최태원·노소영 이혼소송 대법원 간다…한숨 돌린 SK</RankText>
       <CategoryTab
@@ -59,18 +107,19 @@ const HomePage: React.FC = () => {
       />
       <ArticleGrid>
         
-        {!isLoading ? data?.news?.map((article: IArticleCardProps, index: any) => (
-          <ArticleCard 
-            key = {article.news_id}
-            content = {article.content}
-            url = {article.url}
-            news_id = {article.news_id}
-            title = {article.title}
-            media = {article.media}
-            probability = {article.probability}
-          />
-        ))
-          : <p>로딩중...</p>
+        {isLoading || isSearchingLoading ? <LoadingText>로딩중...</LoadingText> :
+          articles ? articles.map((article: IArticleCardProps, index: any) => (
+            <ArticleCard 
+              key = {article.id}
+              body = {article.body}
+              url = {article.url}
+              id = {article.id}
+              title = {article.title}
+              media = {article.media}
+              probability = {article.probability}
+              imageUrl = {article.imageUrl}
+            />
+          )) : <LoadingText> 검색 결과가 없습니다.</LoadingText>
         }
         
       </ArticleGrid>
@@ -95,6 +144,12 @@ const SearchBar = styled.input`
     padding: 4px;
     font-size: 14px;
   }
+`;
+
+const LoadingText = styled.p`
+
+  font-size: 24px;
+  text-align: center;
 `;
 
 interface IRankTextProps {

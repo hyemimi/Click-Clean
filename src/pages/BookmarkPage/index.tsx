@@ -8,16 +8,16 @@ const BookmarkPage = () => {
   return (
     <Container>
       <ArticleGrid>
-        {articles.map((article, index) => (
+        {/* {articles.map((article, index) => (
           <ArticleCard 
-            key = {article.news_id}
-            content = {article.content}
+            key = {article.id}
+            body = {article.body}
             url = {article.url}
-            news_id = {article.news_id}
+            id = {article.id}
             title = {article.title}
             media = {article.media}
             probability = {article.probability}/>
-        ))} 
+        ))}  */}
       </ArticleGrid>
     </Container>
   );
