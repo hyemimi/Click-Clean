@@ -15,10 +15,10 @@ export default SubscribePage;
 
 const SubscribeContainer = styled(Container)`
 
-    
   display: flex;
   flex-direction: column; 
   align-items: center;    
   justify-content: center; 
   height: calc(100vh - 44px);  
+  padding: 0px;
 `;

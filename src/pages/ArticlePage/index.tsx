@@ -1,3 +1,4 @@
+import apis from 'apis/index';
 import RateSection from 'components/RateSection';
 import React from 'react';
 import { useParams } from 'react-router-dom';

@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge } from 'styles/common/badge';
-interface IArticleCardProps {
+export interface IArticleCardProps {
     content: string,
     url?: string
     news_id: number,

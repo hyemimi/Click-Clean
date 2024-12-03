@@ -1,4 +1,4 @@
-// import Command from './Command';
+import article from './article';
 // import Logout from './Logout';
 // import Login from './Login';
 // import Patient from './Patient';
@@ -15,3 +15,7 @@
 //   SerialNum,
 //   ChangePassword
 // };
+
+export default {
+  article
+};
