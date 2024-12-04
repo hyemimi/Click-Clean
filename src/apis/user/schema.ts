@@ -4,7 +4,7 @@ export type GetUserInfoRes = {
     username: string,
     email: string,
     createdAt: string,
-    social: boolean
+    social: boolean | null,
     providerId: string
 }
 

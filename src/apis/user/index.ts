@@ -20,7 +20,7 @@ export const getUserInfo = async(): Promise<any> => {
 export const patchUserInfo = async ({ username, email }: PatchUserInfoReq ) => {
 
   try {
-    const response = await client.post(`${process.env.REACT_APP_BACK1_URL}/api/user`, {
+    const response = await client.patch(`${process.env.REACT_APP_BACK1_URL}/api/user`, {
       username,
       email
     });
@@ -28,6 +28,6 @@ export const patchUserInfo = async ({ username, email }: PatchUserInfoReq ) => {
     return response.data; 
   } 
   catch {
-    throw new Error('post failed');
+    throw new Error('patch failed');
   }
 };

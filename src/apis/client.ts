@@ -77,6 +77,13 @@ client.interceptors.response.use(
         if (status === 401) {
           return;
         }
+
+        const cookie = new Cookies();
+        const accessToken = cookie.get('access_token');
+        if (accessToken) {
+          client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+        }
+
         /** 
         const { accessToken, refreshToken } = await AuthService.refresh(
           refreshTokenFromStorage

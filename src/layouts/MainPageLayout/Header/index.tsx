@@ -7,13 +7,19 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { client } from 'apis/client';
 import { postLogout } from 'apis/auth';
+import { useUserData } from 'context/UserDataProvider';
+import { Cookies } from 'react-cookie';
 
 const NavHeader = () => {
   const navigate = useNavigate();
+  const { user, updateUserInfo } = useUserData();
   const HomePagehandler = () => {
     navigate('/');
   };
-  const BookmarkPagehandler = () => {
+  const UserPageHandler = () => {
+    navigate('user/info');
+  };
+  const BookmarkPageHandler = () => {
     navigate('/bookmark');
   };
   const SubscribePageHandler = () => {
@@ -25,7 +31,12 @@ const NavHeader = () => {
   const LogoutPageHandler = async () => {
     const logout = await postLogout();
     if (logout) {
+      updateUserInfo(null);
       navigate('/');
+      const cookie = new Cookies();
+      cookie.remove('access_token');
+      cookie.remove('refresh_token');
+
       // context API 유저 관련 내용 지워야 함
       console.log('로그아웃되었습니다');
     }
@@ -40,11 +51,12 @@ const NavHeader = () => {
           <LogoName>ClickClean</LogoName>
         </HeaderItemDiv>
         <HeaderItemDiv>
-          <img src={UserIcon} width={30} height={30} />
-          <TextButton onClick={LoginPageHandler}>로그인</TextButton>
-          <TextButton onClick={LogoutPageHandler}>로그아웃</TextButton>
-          <TextButton onClick={SubscribePageHandler}>구독하기</TextButton>
-          <img src={BookmarkIcon} width={20} height={20} onClick={BookmarkPagehandler}/>
+          <img src={UserIcon} width={30} height={30} onClick={UserPageHandler}/>
+          {user && <TextButton onClick={ UserPageHandler}> {user?.username}님 |</TextButton>}
+          {!user && <TextButton onClick={LoginPageHandler}>로그인</TextButton>}
+          {user && <TextButton onClick={LogoutPageHandler}>로그아웃 |</TextButton>}
+          {user && <TextButton onClick={SubscribePageHandler}>구독 |</TextButton>}
+          {user && <TextButton onClick={BookmarkPageHandler}>북마크</TextButton>}
         </HeaderItemDiv>
  
       </Header>

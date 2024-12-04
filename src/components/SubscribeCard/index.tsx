@@ -1,7 +1,34 @@
 import styled from 'styled-components';
 import Logo from 'assets/logo.png';
+import { Button } from 'styles/common/button';
+import { categories } from 'pages/HomePage';
+import { useState } from 'react';
+import { postSubscribe } from 'apis/subscribe';
 
 const SubscribeCard = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedMedia, setSelectedMedia] = useState<string>('');
+
+  const handleCategoryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCategory(event.target.value); // 선택된 값으로 상태 업데이트
+  };
+
+  const handleMediaChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedMedia(event.target.value); // 선택된 값으로 상태 업데이트
+  };
+
+  const subsribleHandler = () => {
+
+    if (!selectedCategory || !selectedMedia) {
+      window.alert('카테고리와 언론사를 선택해주세요');
+
+      return;
+    }
+    postSubscribe({ category: selectedCategory, media: '연합뉴스TV' }).then((res) => {
+      window.alert('성공적으로 구독되었습니다!');
+    });
+
+  };
 
   return (
     <SubscribeBox>
@@ -9,23 +36,23 @@ const SubscribeCard = () => {
       <Title>Click Clean</Title>
       <Description>원하는 카테고리를 구독하면 정기적으로 기사를 받아볼 수 있어요</Description>
       <DropdownContainer>
-        <select>
-          <option value="category">category</option>
-          <option value="economy">경제</option>
-          <option value="">연예</option>
-          <option value="politics">정치</option>
-          <option value="news">사회</option>
-          <option value="news">세계</option>
-          <option value="news">IT/과학</option>
-          <option value="news">생활문화</option>
+        {}
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="" disabled>category</option>
+          {categories.map((ele) => {
+            return (
+              <option key={ele} value={ele}>{ele}</option>
+            );
+          }
+          )}
         </select>
-        <select>
-          <option value="media">media</option>
-          <option value="email">동아일보</option>
-          <option value="rss">연합뉴스TV</option>
+        <select value={selectedMedia} onChange={handleMediaChange}>
+          <option value="" disabled>media</option>
+          <option value="동아일보">동아일보</option>
+          <option value="연합뉴스TV">연합뉴스TV</option>
         </select>
       </DropdownContainer>
-      <Button>
+      <Button onClick={subsribleHandler}>
         구독
       </Button>
     </SubscribeBox>
@@ -51,21 +78,6 @@ const Title = styled.h1`
 const Description = styled.p`
     font-size: 1rem;
     font-weight: bold;
-`;
-
-const Button = styled.button`
-  background-color: rgba(82, 159, 242, 1);
-  color: #ffffff;
-  border: none;
-  border-radius: 4px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  width : 60px;
-  height: 30px;
-
-  &:hover {
-    background-color:  rgba(82, 159, 242, 0.8);
-  }
 `;
 
 const DropdownContainer = styled.div`

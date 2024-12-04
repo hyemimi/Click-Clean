@@ -7,6 +7,7 @@ import BookmarkPage from 'pages/BookmarkPage';
 import SubscribePage from 'pages/SubscribePage';
 import LoginPage from 'pages/LoginPage';
 import Redirect from 'pages/Redirect';
+import UserInfoPage from 'pages/UserInfoPage';
 
 const RootRoutes = () => {
   return (
@@ -18,7 +19,7 @@ const RootRoutes = () => {
           <Route path="/bookmark" element={<BookmarkPage />} />
           <Route path="/subscribe" element={<SubscribePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/auth/kakao/callback" element={<Redirect/>} />
+          <Route path="/user/info" element={<UserInfoPage/>} />
         </Route>
       </Routes>
     </BrowserRouter>

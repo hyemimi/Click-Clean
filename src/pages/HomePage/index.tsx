@@ -11,6 +11,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { getUserInfo } from 'apis/user';
+import { useUserData } from 'context/UserDataProvider';
 
 export const categories = ['경제', '정치', '사회', '세계', 'IT/과학', '생활/문화'];
 
@@ -48,6 +49,9 @@ const HomePage: React.FC = () => {
     queryFn: () => getUserInfo(),
     enabled: isLogin
   });
+
+  // 유저 데이터 업데이트 (context)
+  const { updateUserInfo, user } = useUserData();
   
   const handleCategorySelect = (category: string) => {
     setIsSearchActive(false);
@@ -111,7 +115,14 @@ const HomePage: React.FC = () => {
 
   },[cookies]);
 
-  useEffect(() => {console.log(userData?.data?.username);}, [userData]);
+  useEffect(() => {
+    
+    if (userData) {
+      console.log('로그인 되어있습니다');
+      updateUserInfo(userData.data);
+    }
+  
+  }, [userData]);
 
   return (
     <Container>
