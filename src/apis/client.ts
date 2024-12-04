@@ -13,33 +13,11 @@ export const client = (() => {
 
 )();
 
-// const request = async (options: AxiosRequestConfig) => {
-
-//   /** 성공 시 실행 */
-//   const onSuccess = (response: AxiosResponse) => {
-//     const { data } = response;
-
-//     return data;
-//   };
-
-//   /** 실패 시 실행*/
-//   const onError = function (error: AxiosError) {
-//     return Promise.reject({
-//       message: error.message,
-//       code: error.code,
-//       response: error.response
-//     });
-//   };
-
-//   return client(options).then(onSuccess).catch(onError);
-// };
-
-// export default request;
+const cookie = new Cookies();
 
 /** interceptors - request */
 client.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const cookie = new Cookies();
 
     const accessToken = cookie.get('access_token');
 
@@ -72,13 +50,17 @@ client.interceptors.response.use(
 
       try {
         // refreshToken 기반으로 accessToken,refreshToken 다시 요청하는 과정
-        const status = await getAccessToken();
+        
+        const refresh_token = cookie.get('refresh_token');
+        if (refresh_token) {
+          const status = await getAccessToken(refresh_token);
 
-        if (status === 401) {
-          return;
+          if (status === 401) {
+            return;
+          }
+
         }
 
-        const cookie = new Cookies();
         const accessToken = cookie.get('access_token');
         if (accessToken) {
           client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
