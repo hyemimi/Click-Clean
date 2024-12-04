@@ -1,18 +1,26 @@
 import { Container } from 'styles/common/container';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Redirect = () => {
+  const navigate = useNavigate();
 
   const sendCodeToBackend = async () => {
     try {
-      const response = await axios.get('http://13.124.172.225:3001/auth/kakao/callback',{
+      await axios.get('http://13.124.172.225:3001/auth/kakao/callback',{
         withCredentials: true,
         headers: {
           Accept: 'application/json, text/plain, */*'
         }
-      });
-      console.log('Response:', response.data);
+      }).then((res) => {
+        console.log(res.data);
+        navigate('/');
+      }
+      ).catch((err) => 
+        navigate('/login')
+      );
+      
     } catch (error:any) {
       if (error.response) {
         // The server responded with a status code outside 2xx

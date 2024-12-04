@@ -8,18 +8,24 @@ import { ArticleGrid } from 'styles/common/article';
 import { getArticleList, getSearchingList } from 'apis/article';
 import Pagination from 'components/Pagination';
 import { useQuery } from '@tanstack/react-query';
-import { articles } from 'temp/articles';
+import axios from 'axios';
+import { Cookies } from 'react-cookie';
+import { getUserInfo } from 'apis/user';
 
-export const categories = ['경제', '연예', '정치', '사회', '세계', 'IT/과학', '생활문화'];
+export const categories = ['경제', '정치', '사회', '세계', 'IT/과학', '생활/문화'];
 
 const HomePage: React.FC = () => {
-  const [category, setCategory] = useState<string>('경제');
+  const [category, setCategory] = useState('경제');
   const [articles, setArticles] = useState([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0); // 전체 페이지 수 상태
   const [input, setInput] = useState('');
   const [keyword, setKeyword] = useState('');
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
+  const [isLogin,setIsLogin] = useState(false);
+  
+  const cookies = new Cookies();
+ 
   /** 기사 데이터 fetching */
 
   // 기사 데이터 fetching (카테고리 기반)
@@ -35,6 +41,13 @@ const HomePage: React.FC = () => {
     queryFn: () => getSearchingList({ page, keyword }),
     enabled: isSearchActive
   });
+
+  // 유저 데이터 fetching
+  const { data: userData, isLoading: isUserLoading } = useQuery({
+    queryKey: ['userData',{ cookies }], // page나 category가 변경될 때마다 queryFn 실행 
+    queryFn: () => getUserInfo(),
+    enabled: isLogin
+  });
   
   const handleCategorySelect = (category: string) => {
     setIsSearchActive(false);
@@ -43,7 +56,6 @@ const HomePage: React.FC = () => {
 
   // useEffect로 totalPages를 업데이트
   useEffect(() => {
-    console.log(page);
  
     if (data?.data?.news) {
       setArticles(data?.data?.news);
@@ -90,6 +102,16 @@ const HomePage: React.FC = () => {
       setInput('');
     }
   };
+ 
+  useEffect(() => { 
+    const access_token = cookies.get('access_token');
+    if (access_token) {
+      setIsLogin(true);
+    }
+
+  },[cookies]);
+
+  useEffect(() => {console.log(userData?.data?.username);}, [userData]);
 
   return (
     <Container>
@@ -107,7 +129,7 @@ const HomePage: React.FC = () => {
       />
       <ArticleGrid>
         
-        {isLoading || isSearchingLoading ? <LoadingText>로딩중...</LoadingText> :
+        {
           articles ? articles.map((article: IArticleCardProps, index: any) => (
             <ArticleCard 
               key = {article.id}
@@ -118,10 +140,10 @@ const HomePage: React.FC = () => {
               media = {article.media}
               probability = {article.probability}
               imageUrl = {article.imageUrl}
+              summary = {article.summary}
             />
           )) : <LoadingText> 검색 결과가 없습니다.</LoadingText>
         }
-        
       </ArticleGrid>
       <Pagination pageCount={totalPages} onPageChange={handlePageChange}/>
     </Container>
@@ -147,9 +169,13 @@ const SearchBar = styled.input`
 `;
 
 const LoadingText = styled.p`
-
+  align-items: center;
   font-size: 24px;
   text-align: center;
+  top: 50%;
+  left: 50%;
+   transform: translate(-50%, -50%);
+   position: absolute;
 `;
 
 interface IRankTextProps {

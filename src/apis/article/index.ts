@@ -10,7 +10,7 @@ import axios from 'axios';
 export const postRate = async ({ value, id }: PostRateReq) => {
 
   try {
-    const response = await client.post(`/news/${id}/evaluate`, {
+    const response = await client.post(`${process.env.REACT_APP_BACK2_URL}/news/${id}/evaluate`, {
       value
     });
 
@@ -41,7 +41,7 @@ export const getSearchArticles = async ({ input, page, size } : GetSearchArticle
 export const postScrap = async ({ id }: PostScrapReq) => {
 
   try {
-    const response = await client.post('/news/scrap', {
+    const response = await client.post(`${process.env.REACT_APP_BACK1_URL}/news/scrap`, {
       id
     });
 
@@ -56,7 +56,7 @@ export const postScrap = async ({ id }: PostScrapReq) => {
 export const getArticleList = async({ category, probability, media, page }: GetArticleListReq): Promise<any> => {
 
   try {
-    const response = await axios.get(`${process.env.REACT_APP_BACK1_URL}/api/news`, {
+    const response = await client.get(`${process.env.REACT_APP_BACK1_URL}/api/news`, {
       params: { page,size: 9, category }
     });
 
@@ -72,7 +72,7 @@ export const getArticleList = async({ category, probability, media, page }: GetA
 /** 기사 세부 내용을 조회합니다 */
 export const getArticleDetail = async( { id }: GetArticleDetailReq) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_BACK2_URL}/api/article/${id}`
+    const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/article/${id}`
     );
 
     return response.data;
@@ -81,22 +81,12 @@ export const getArticleDetail = async( { id }: GetArticleDetailReq) => {
     throw new Error('get Article Detail failed');
   }
 };
-/** 댓글을 조회합니다 */
-export const getCommentList = async({ id, page, size }: GetCommentListReq) => {
-  try {
-    const response = await client.get(`/comments?newsId=${id}&page=${page}&size=${size}`);
-    
-    return response.data;    
-  }
-  catch {
-    throw new Error('get Comment List failed');
-  }
-};
+
 /** 댓글을 작성합니다 */
 export const postComment = async ({ id, content }: PostCommentReq) => {
 
   try {
-    const response = await client.post('/comments', {
+    const response = await client.post(`${process.env.REACT_APP_BACK1_URL}/api/comment`, {
       id,
       content
     });
@@ -108,10 +98,23 @@ export const postComment = async ({ id, content }: PostCommentReq) => {
   }
 };
 
+/** 기사의 댓글들을 가져옵니다 */
+export const getCommentList = async ({ id } : GetCommentListReq) => {
+
+  try {
+    const response = await client.get(`${process.env.REACT_APP_BACK1_URL}/api/news/${id}/comments`);
+
+    return response.data; 
+  } 
+  catch {
+    throw new Error('post comment failed');
+  }
+};
+
 /** 기사를 키워드 기반으로 검색합니다 */
 export const getSearchingList = async( { keyword, page }: GetSearchingListReq) => {
   try {
-    const response = await axios.get(`${process.env.REACT_APP_BACK2_URL}/api/search`,
+    const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/search`,
       { params: { keyword, page, size: 9 } }
     );
 
@@ -120,15 +123,4 @@ export const getSearchingList = async( { keyword, page }: GetSearchingListReq) =
   catch {
     throw new Error('get Article Detail failed');
   }
-};
-
-export default {
-  postRate,
-  getSearchArticles,
-  postScrap,
-  getArticleList,
-  getArticleDetail,
-  getCommentList,
-  postComment,
-  getSearchingList
 };

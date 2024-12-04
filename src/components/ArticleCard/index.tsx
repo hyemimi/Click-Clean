@@ -9,7 +9,8 @@ export interface IArticleCardProps {
 		title: string,
 		media: string,
 		probability: number,
-    imageUrl: string
+    imageUrl: string,
+    summary: string
 }
 
 // Component
@@ -20,7 +21,8 @@ const ArticleCard: React.FC<IArticleCardProps> = ({
   title,
   media,
   imageUrl,
-  probability }) => {
+  probability,
+  summary }) => {
 
   const navigate = useNavigate();
   const ArticlePageHandler = () => {
@@ -33,7 +35,7 @@ const ArticleCard: React.FC<IArticleCardProps> = ({
       <Thumbnail image={imageUrl}/>
       <Content>
         <Title>{ title.length >= 50 ? title.slice(0,50) + '...' : title }</Title>
-        <Description>{ title.length >= 80 ? title.slice(0,80) + '...' : title }</Description>
+        <Description>{ summary.length >= 80 ? summary.slice(0,80) + '...' : title }</Description>
       </Content>
     </Card>
   );

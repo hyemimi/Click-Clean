@@ -2,6 +2,7 @@ import React from 'react';
 import RootRoutes from './routes/RootRoutes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { CookiesProvider } from 'react-cookie';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,7 +17,9 @@ const queryClient = new QueryClient({
 const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
-      <RootRoutes />
+      <CookiesProvider>
+        <RootRoutes />
+      </CookiesProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

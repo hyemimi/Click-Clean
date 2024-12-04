@@ -7,7 +7,6 @@ const Pagination: React.FC<IPaginationProps> = ({ pageCount, onPageChange }) => 
 
   /**pageCount - 총 페이지 수
     pageRangeDisplayed - 한 페이지에 표시할 게시글의 수 */
-  console.log(pageCount);
 
   return (
     <PaginationContainer>
@@ -34,7 +33,7 @@ interface IPaginationProps {
 const PaginationContainer = styled.div`
 display: flex;
 justify-content: center;
-margin: 20px 0;
+margin: 60px 0;
 `;
 
 const StyledPaginate = styled(ReactPaginate)`

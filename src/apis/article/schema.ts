@@ -73,21 +73,19 @@ export type GetArticleDetailRes = {
 
 export type GetCommentListReq = {
     id: number,
-    page: number,
-    size: number
+}
+
+export interface IComment {
+    id: number,
+    userId: number
+    articleId: number,
+    user_title: string,
+    probability: number,
+    createdAt: string
 }
 
 export type GetCommentListRes = {
-    
-    totalPages: number,
-    page: number
-    comments: [
-        commentId: number,
-        userId: number,
-        username: string,
-        comment: string
-    ]
-    
+    commentList: IComment[]
 }
 
 export type PostCommentReq = {

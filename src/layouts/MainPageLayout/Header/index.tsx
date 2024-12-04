@@ -6,6 +6,7 @@ import { FlexDiv } from 'styles/common/FlexDiv';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { client } from 'apis/client';
+import { postLogout } from 'apis/auth';
 
 const NavHeader = () => {
   const navigate = useNavigate();
@@ -21,12 +22,14 @@ const NavHeader = () => {
   const LoginPageHandler = () => {
     navigate('/login');
   };
-  const LogoutPageHandler = () => {
-  
-    client.post('/auth/logout')
-      .then((res) => {if (res.status === 201) {
-        navigate('/');
-      } }).catch((err) => console.log(err)) ;
+  const LogoutPageHandler = async () => {
+    const logout = await postLogout();
+    if (logout) {
+      navigate('/');
+      // context API 유저 관련 내용 지워야 함
+      console.log('로그아웃되었습니다');
+    }
+    
   };
 
   return (
