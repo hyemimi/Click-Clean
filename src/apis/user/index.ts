@@ -24,6 +24,7 @@ export const patchUserInfo = async ({ username, email }: PatchUserInfoReq ) => {
       username,
       email
     });
+    console.log('성공');
 
     return response.data; 
   } 

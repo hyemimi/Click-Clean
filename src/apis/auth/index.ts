@@ -24,12 +24,10 @@ export const postLogout = async() => {
   try {
     const response = await client.post(`${process.env.REACT_APP_BACK1_URL}/auth/logout`);
 
-    if (response.status !== 201) {
+    if (response.status === 200) return true;
+    else {
       return false;
     }
-
-    return true;
-
   } catch (error) {
     throw new Error('post Logout failed');
   }

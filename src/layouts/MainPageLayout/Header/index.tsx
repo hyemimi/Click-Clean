@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 import Logo from 'assets/logo.png';
 import UserIcon from 'assets/userIcon.png';
-import BookmarkIcon from 'assets/bookmarkIC.png';
 import { FlexDiv } from 'styles/common/FlexDiv';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import { client } from 'apis/client';
 import { postLogout } from 'apis/auth';
 import { useUserData } from 'context/UserDataProvider';
 import { Cookies } from 'react-cookie';
@@ -29,7 +26,10 @@ const NavHeader = () => {
     navigate('/login');
   };
   const LogoutPageHandler = async () => {
+    console.log('로그아웃 버튼 눌렀습니다');
     const logout = await postLogout();
+    console.log(logout);
+
     if (logout) {
       updateUserInfo(null);
       navigate('/');
@@ -51,7 +51,7 @@ const NavHeader = () => {
           <LogoName>ClickClean</LogoName>
         </HeaderItemDiv>
         <HeaderItemDiv>
-          <img src={UserIcon} width={30} height={30} onClick={UserPageHandler}/>
+          {user && <img src={UserIcon} width={30} height={30} onClick={UserPageHandler}/>}
           {user && <TextButton onClick={ UserPageHandler}> {user?.username}님 |</TextButton>}
           {!user && <TextButton onClick={LoginPageHandler}>로그인</TextButton>}
           {user && <TextButton onClick={LogoutPageHandler}>로그아웃 |</TextButton>}

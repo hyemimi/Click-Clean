@@ -4,10 +4,10 @@ import { getAccessToken } from './auth';
 
 export const client = (() => {
   return axios.create({
-    withCredentials: true,
     headers: {
       Accept: 'application/json, text/plain, */*'
     }
+    //withCredentials: true
   });
 }
 
@@ -63,7 +63,7 @@ client.interceptors.response.use(
 
         const accessToken = cookie.get('access_token');
         if (accessToken) {
-          client.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+          originalConfig.headers.Authorization = `Bearer ${accessToken}`;
         }
 
         /** 

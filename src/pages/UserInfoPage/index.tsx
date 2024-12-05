@@ -24,7 +24,7 @@ const UserInfoPage = () => {
 
   const handleSaveHandler = () => {
     // 유저 정보 수정
-    patchUserInfo({ username, email });
+    patchUserInfo({ username, email }).then(() => console.log('email 등록 완료'));
   };
 
   return (
