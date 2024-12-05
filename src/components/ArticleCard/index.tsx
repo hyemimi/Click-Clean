@@ -1,7 +1,9 @@
+import { postScrap } from 'apis/scrap';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge } from 'styles/common/badge';
+import ScrapIC from 'assets/nonbookmarkIC.png';
 export interface IArticleCardProps {
     body: string,
     url?: string
@@ -43,6 +45,7 @@ const ArticleCard: React.FC<IArticleCardProps> = ({
 
 // Styled Components
 const Card = styled.div`
+  
   display: flex;
   align-items: center;
   padding: 16px;
@@ -52,6 +55,7 @@ const Card = styled.div`
   position: relative;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
+  max-height: 110px;
   &:hover {
     transform: translateY(-2px) scale(1.01);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
@@ -74,6 +78,10 @@ const Content = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  .img {
+    justify-content: right;
+  }
 `;
 
 const Title = styled.h3`

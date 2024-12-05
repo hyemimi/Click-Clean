@@ -1,7 +1,7 @@
 
 export type PostScrapReq = {
-    id: number,
-    value: boolean,
+    id: number | undefined,
+    value: boolean
 }
 
 export type GetScrapListReq = {

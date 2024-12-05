@@ -1,9 +1,13 @@
 import { client } from 'apis/client';
 import { GetScrapListReq, PostScrapReq } from './schema';
+import { Cookies } from 'react-cookie';
 
 /** 스크랩을 생성합니다 */
 export const postScrap = async( { id, value }: PostScrapReq) => {
   // id: 기사 id
+
+  const cookie = new Cookies();
+  const access_token = cookie.get('access_token');
 
   try {
     const response = await client.post(`${process.env.REACT_APP_BACK2_URL}/api/scrap/save`,

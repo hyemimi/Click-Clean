@@ -6,8 +6,8 @@ export const client = (() => {
   return axios.create({
     headers: {
       Accept: 'application/json, text/plain, */*'
-    }
-    //withCredentials: true
+    },
+    withCredentials: true
   });
 }
 

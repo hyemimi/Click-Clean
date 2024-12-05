@@ -5,12 +5,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge } from 'styles/common/badge';
+import ScrapIC from 'assets/nonbookmarkIC.png';
+import { postScrap } from 'apis/scrap';
 
 const ArticlePage: React.FC = () => {
 
   const { id } = useParams();
-
-  console.log(id);
   const idNum = id ? Number(id) : undefined;
 
   const { data, isLoading } = useQuery({
@@ -19,9 +19,16 @@ const ArticlePage: React.FC = () => {
     enabled: !!idNum
   });
 
+  const ScrapHandler = async () => {
+    const res = await postScrap({ id: idNum, value: true });
+  };
+
   return (
     <ArticleContainer>
       <ArticleBadge probability={data?.data?.probability}>유사도 {data?.data?.probability}%</ArticleBadge>
+      <BookmarkDiv>
+        <img src={ScrapIC} width={16} height={18} onClick={ScrapHandler}/>
+      </BookmarkDiv>
       <Tag>{data?.data?.category}</Tag>
       <Title>{data?.data?.title}</Title>
       <MetaInfo>
@@ -34,7 +41,7 @@ const ArticlePage: React.FC = () => {
         원문 보기: <a href={data?.data?.url} target="_blank" rel="noopener noreferrer">{data?.data?.url}</a>
       </Footer>
       <GrayHr />
-      <RateSection />
+      {idNum && <RateSection id={idNum} />}
     </ArticleContainer>
   );
    
@@ -115,4 +122,9 @@ const ArticleBadge = styled(Badge)`
   left: 10px;
   
 
+`;
+
+const BookmarkDiv = styled.div`
+  text-align: right;
+  height: 10px;
 `;

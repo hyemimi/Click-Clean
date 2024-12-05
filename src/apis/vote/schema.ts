@@ -1,4 +1,4 @@
 export type PostVoteReq = {
-    id: number,
+    id?: number,
     value: boolean
 }

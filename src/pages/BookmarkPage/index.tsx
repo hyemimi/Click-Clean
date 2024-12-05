@@ -6,6 +6,7 @@ import { useUserData } from 'context/UserDataProvider';
 import { useQuery } from '@tanstack/react-query';
 import { getScrapList } from 'apis/scrap';
 import { useState } from 'react';
+import Pagination from 'components/Pagination';
 
 const BookmarkPage = () => {
 
@@ -17,6 +18,10 @@ const BookmarkPage = () => {
     queryKey: ['getBookmarkList',{ user, page }], // page나 category가 변경될 때마다 queryFn 실행 
     queryFn: () => getScrapList({ page })
   });
+
+  const handlePageChange = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
 
   console.log(data);
 
@@ -36,6 +41,8 @@ const BookmarkPage = () => {
             probability = {article.probability}/>
         ))}
       </ArticleGrid>
+  
+      <Pagination pageCount={totalPages} onPageChange={handlePageChange}/>
     </Container>
   );
 };

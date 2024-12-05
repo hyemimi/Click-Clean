@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Cookies } from 'react-cookie';
 import { getUserInfo } from 'apis/user';
 import { useUserData } from 'context/UserDataProvider';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export const categories = ['경제', '정치', '사회', '세계', 'IT/과학', '생활/문화'];
 
@@ -24,11 +25,12 @@ const HomePage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
   const [isLogin,setIsLogin] = useState(false);
-  
+
   const cookies = new Cookies();
  
-  /** 기사 데이터 fetching */
-
+  const navigate = useNavigate();
+  const { updateUserInfo, user } = useUserData();
+ 
   // 기사 데이터 fetching (카테고리 기반)
   const { data, isLoading, isError } = useQuery({
     queryKey: ['getAllArticles',{ page, category }], // page나 category가 변경될 때마다 queryFn 실행 
@@ -51,7 +53,6 @@ const HomePage: React.FC = () => {
   });
 
   // 유저 데이터 업데이트 (context)
-  const { updateUserInfo, user } = useUserData();
   
   const handleCategorySelect = (category: string) => {
     setIsSearchActive(false);
@@ -72,11 +73,6 @@ const HomePage: React.FC = () => {
     }
    
   }, [data]); // data가 변경될 때마다 실행됨
-  // useEffect(() => {
-  //   console.log(process.env.REACT_APP_BASE_URL);
-  //   client.get('/api/user').then((res) => console.log(res.data));
-   
-  // }, []);
 
   useEffect(() => {
     if (searchingData) {
@@ -118,7 +114,11 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     
     if (userData) {
-      console.log('로그인 되어있습니다');
+
+      if (userData?.data.email === '') {
+        // 이메일 입력
+        navigate('/user/info');
+      }
       updateUserInfo(userData.data);
     }
   
