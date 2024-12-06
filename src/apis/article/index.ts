@@ -102,7 +102,7 @@ export const postComment = async ({ id, userTitle }: PostCommentReq) => {
 export const getCommentList = async ({ id } : GetCommentListReq) => {
 
   try {
-    const response = await client.get(`${process.env.REACT_APP_BACK1_URL}/api/comment/${id}`);
+    const response = await client.get(`${process.env.REACT_APP_BACK1_URL}/api/news/${id}/comments`);
 
     return response.data; 
   } 

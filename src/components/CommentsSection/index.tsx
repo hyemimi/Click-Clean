@@ -33,17 +33,22 @@ const CommentsSection:React.FC<ICommentsSectionProps> = ({ id }) => {
         placeholder="기사의 새로운 제목을 지어주세요!"
       />
       <CommentButton onClick={registerCommentHandler}>등록</CommentButton>
-      {data?.data && <CommentSection>
+      {data?.data.length > 0 && <CommentSection>
         <CommentHeader>{data?.data.length}개의 의견</CommentHeader>
-        <Comment>
-          <CommentText>
-            {data?.data.userTitle}
-          </CommentText>
-          <LikeDislikeButtons>
-            <LikeButton onClick={registerCommentHandler}>👍</LikeButton>
-            <DislikeButton onClick={registerCommentHandler}>👎</DislikeButton>
-          </LikeDislikeButtons>
-        </Comment>
+        {data?.data.map((comment: any) => {
+          return (
+            <Comment key={comment.id}>
+              <CommentText>
+                {comment.userTitle}
+              </CommentText>
+              <LikeDislikeButtons>
+                <LikeButton onClick={registerCommentHandler}>👍</LikeButton>
+                <DislikeButton onClick={registerCommentHandler}>👎</DislikeButton>
+              </LikeDislikeButtons>
+            </Comment>
+          );
+        })}
+       
       </CommentSection>
       }
     </CommentsDiv>
