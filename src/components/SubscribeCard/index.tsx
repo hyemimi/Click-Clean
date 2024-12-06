@@ -5,6 +5,8 @@ import { categories } from 'pages/HomePage';
 import { useState } from 'react';
 import { postSubscribe } from 'apis/subscribe';
 
+const media = ['JTBC', 'MBC', 'SBS', 'KBS', 'YTN'];
+
 const SubscribeCard = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedMedia, setSelectedMedia] = useState<string>('');
@@ -48,8 +50,11 @@ const SubscribeCard = () => {
         </select>
         <select value={selectedMedia} onChange={handleMediaChange}>
           <option value="" disabled>media</option>
-          <option value="동아일보">동아일보</option>
-          <option value="연합뉴스TV">연합뉴스TV</option>
+          {media.map((ele) => {
+            return (
+              <option key={ele} value={ele}>{ele}</option>
+            );
+          })}
         </select>
       </DropdownContainer>
       <Button onClick={subsribleHandler}>

@@ -5,7 +5,9 @@ import { getAccessToken } from './auth';
 export const client = (() => {
   return axios.create({
     headers: {
-      Accept: 'application/json, text/plain, */*'
+      'Accept': 'application/json, text/plain, */*',
+      'Access-Control-Allow-Origin': 'http://3.234.40.71:8080',
+      'Access-Control-Allow-Credentials': 'true'
     },
     withCredentials: true
   });
