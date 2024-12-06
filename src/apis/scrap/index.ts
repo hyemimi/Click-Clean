@@ -5,23 +5,14 @@ import { Cookies } from 'react-cookie';
 /** 스크랩을 생성합니다 */
 export const postScrap = async( { id, value }: PostScrapReq) => {
   // id: 기사 id
-
   const cookie = new Cookies();
-  const access_token = cookie.get('access_token');
+  const response = await client.post(`${process.env.REACT_APP_BACK2_URL}/api/scrap/save`,
+    { 
+      id
+    }
+  );
 
-  try {
-    const response = await client.post(`${process.env.REACT_APP_BACK2_URL}/api/scrap/save`,
-      { 
-        id,
-        value
-      }
-    );
-
-    return response.data;
-  }
-  catch {
-    throw new Error('post scrap failed');
-  }
+  return response.data;
 };
 
 /** 스크랩 리스트를 얻어옵니다 */

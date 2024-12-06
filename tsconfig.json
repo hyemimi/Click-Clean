@@ -30,6 +30,7 @@
        "routes/*": ["routes/*"],
        "styles/*": ["styles/*"]
      },
-     "types": ["vite/client"]
+     "types": ["vite/client"],
+     "emitBOM": false
   }
 }

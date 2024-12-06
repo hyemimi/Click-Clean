@@ -90,7 +90,7 @@ export type GetCommentListRes = {
 
 export type PostCommentReq = {
     id: number,
-    content: string
+    userTitle: string
 }
 
 export type PostCommentRes = {

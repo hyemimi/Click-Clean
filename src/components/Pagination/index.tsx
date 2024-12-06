@@ -33,7 +33,7 @@ interface IPaginationProps {
 const PaginationContainer = styled.div`
 display: flex;
 justify-content: center;
-margin: 60px 0;
+margin: 30px 0;
 `;
 
 const StyledPaginate = styled(ReactPaginate)`

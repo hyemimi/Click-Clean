@@ -83,12 +83,12 @@ export const getArticleDetail = async( { id }: GetArticleDetailReq) => {
 };
 
 /** 댓글을 작성합니다 */
-export const postComment = async ({ id, content }: PostCommentReq) => {
+export const postComment = async ({ id, userTitle }: PostCommentReq) => {
 
   try {
     const response = await client.post(`${process.env.REACT_APP_BACK1_URL}/api/comment`, {
-      id,
-      content
+      userTitle,
+      articleId: id
     });
 
     return response.data; 
@@ -102,7 +102,7 @@ export const postComment = async ({ id, content }: PostCommentReq) => {
 export const getCommentList = async ({ id } : GetCommentListReq) => {
 
   try {
-    const response = await client.get(`${process.env.REACT_APP_BACK1_URL}/api/news/${id}/comments`);
+    const response = await client.get(`${process.env.REACT_APP_BACK1_URL}/api/comment/${id}`);
 
     return response.data; 
   } 
@@ -114,7 +114,7 @@ export const getCommentList = async ({ id } : GetCommentListReq) => {
 /** 기사를 키워드 기반으로 검색합니다 */
 export const getSearchingList = async( { keyword, page }: GetSearchingListReq) => {
   try {
-    const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/search`,
+    const response = await client.get('/api2/search',
       { params: { keyword, page, size: 9 } }
     );
 

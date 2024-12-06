@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { Badge } from 'styles/common/badge';
 import ScrapIC from 'assets/nonbookmarkIC.png';
 import { postScrap } from 'apis/scrap';
+import CommentsSection from 'components/CommentsSection';
 
 const ArticlePage: React.FC = () => {
 
@@ -42,6 +43,7 @@ const ArticlePage: React.FC = () => {
       </Footer>
       <GrayHr />
       {idNum && <RateSection id={idNum} />}
+      {idNum && <CommentsSection id={idNum} />}
     </ArticleContainer>
   );
    

@@ -20,7 +20,6 @@ client.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
 
     const accessToken = cookie.get('access_token');
-    console.log(config.headers.Authorization);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -43,11 +42,12 @@ client.interceptors.response.use(
   // 에러, 토큰 만료 or 그 외 에러
   async (err) => {
 
-    const { config, response: { status } } = err;
+    const { config, response } = err;
     const originalConfig = config; 
   
+    console.log(response?.status);
     // 토큰 만료
-    if (status === 401 && !originalConfig._retry) {
+    if (response?.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true;
 
       try {
@@ -78,7 +78,7 @@ client.interceptors.response.use(
     }
   
     // 그 외 에러
-    if (status === 403 && err.response.data) {
+    if (response?.status === 403 && err.response.data) {
       return Promise.reject(err.response.data);
     }
   

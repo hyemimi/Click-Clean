@@ -34,8 +34,8 @@ const NavHeader = () => {
       updateUserInfo(null);
       navigate('/');
       const cookie = new Cookies();
-      cookie.remove('access_token');
-      cookie.remove('refresh_token');
+      cookie.remove('access_token',{ path: '/' });
+      cookie.remove('refresh_token', { path: '/' });
 
       // context API 유저 관련 내용 지워야 함
       console.log('로그아웃되었습니다');

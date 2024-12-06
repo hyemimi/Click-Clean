@@ -13,6 +13,7 @@ import { Cookies } from 'react-cookie';
 import { getUserInfo } from 'apis/user';
 import { useUserData } from 'context/UserDataProvider';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { getRanking } from 'apis/rank';
 
 export const categories = ['경제', '정치', '사회', '세계', 'IT/과학', '생활/문화'];
 
@@ -50,6 +51,13 @@ const HomePage: React.FC = () => {
     queryKey: ['userData',{ cookies }], // page나 category가 변경될 때마다 queryFn 실행 
     queryFn: () => getUserInfo(),
     enabled: isLogin
+  });
+
+  // 실시간 조회수 fetching
+  const { data: rankingData } = useQuery({
+    // 3시간마다 fetching 가능해야 함
+    queryKey: ['rankingData'], // page나 category가 변경될 때마다 queryFn 실행 
+    queryFn: () => getRanking()
   });
 
   // 유저 데이터 업데이트 (context)
@@ -123,6 +131,11 @@ const HomePage: React.FC = () => {
     }
   
   }, [userData]);
+
+  useEffect(() => {
+
+    console.log(rankingData?.data);
+  }, [rankingData]);
 
   return (
     <Container>
