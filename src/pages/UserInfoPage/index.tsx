@@ -39,6 +39,13 @@ const UserInfoPage = () => {
 
       return;
     }
+    // 이메일 형식 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (! emailRegex.test(inputValue)) {
+      window.alert('email 형식이 올바르지 않습니다');
+      
+      return;
+    }
 
     patchUserInfo({ username: user?.username, email: inputValue }).then(() => {
       updateUserInfo({

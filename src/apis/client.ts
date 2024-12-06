@@ -5,9 +5,7 @@ import { getAccessToken } from './auth';
 export const client = (() => {
   return axios.create({
     headers: {
-      'Accept': 'application/json, text/plain, */*',
-      'Access-Control-Allow-Origin': 'http://3.234.40.71:8080',
-      'Access-Control-Allow-Credentials': 'true'
+      Accept: 'application/json, text/plain, */*'
     },
     withCredentials: true
   });
@@ -17,14 +15,16 @@ export const client = (() => {
 
 const cookie = new Cookies();
 
-/** interceptors - request */
+/** interceptors - request: access-token을 매 요청마다 헤더에 실어서 보냅니다 */
 client.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
 
     const accessToken = cookie.get('access_token');
+    console.log(config.headers.Authorization);
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
+      console.log(config.headers.Authorization);
     }
     
     return config;
@@ -35,7 +35,7 @@ client.interceptors.request.use(
   }
 );
 
-// /** interceptors - response */
+// /** interceptors - response:  */
 client.interceptors.response.use(
   (res: AxiosResponse) => {
     return res; // 정상 리턴
@@ -67,22 +67,12 @@ client.interceptors.response.use(
         if (accessToken) {
           originalConfig.headers.Authorization = `Bearer ${accessToken}`;
         }
-
-        /** 
-        const { accessToken, refreshToken } = await AuthService.refresh(
-          refreshTokenFromStorage
-        ); 
-        */
-  
-        // client에 토큰 다시 설정
-        //LocalStorageService.setTokens(accessToken, refreshToken);
-        //client.defaults.headers.common.Authorization = `${accessToken}`;
   
         return await client(originalConfig); // 재요청, config인 Request는 바뀐 것이 없으므로 그대로 사용.
       } 
       catch (error: unknown) {
         // 토큰 요청 실패, 다시 로그인 해야함. 
-        //로그인 페이지로 이동
+        
         return Promise.reject(error);
       }
     }
