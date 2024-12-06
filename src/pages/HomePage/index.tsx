@@ -1,6 +1,6 @@
 // pages/HomePage.tsx
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import ArticleCard, { IArticleCardProps } from 'components/ArticleCard';
 import CategoryTab from 'components/CategoryTab';
 import { Container } from 'styles/common/container';
@@ -26,6 +26,8 @@ const HomePage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
   const [isLogin,setIsLogin] = useState(false);
+  const [currentRank, setCurrentRank] = useState(0); 
+  const [isFadingIn, setIsFadingIn] = useState(true);
 
   const cookies = new Cookies();
  
@@ -57,7 +59,10 @@ const HomePage: React.FC = () => {
   const { data: rankingData } = useQuery({
     // 3시간마다 fetching 가능해야 함
     queryKey: ['rankingData'], // page나 category가 변경될 때마다 queryFn 실행 
-    queryFn: () => getRanking()
+    queryFn: () => getRanking(),
+    refetchInterval: 3 * 60 * 60 * 1000, // 3시간마다 자동으로 refetch
+    staleTime: 3 * 60 * 60 * 1000 // 3시간 동안 캐시된 데이터 사용 (3시간이 지나기 전까지는 refetch하지 않음)
+    // 캐시된 데이터가 유지되는 시간 (3시간 동안)
   });
 
   // 유저 데이터 업데이트 (context)
@@ -96,21 +101,6 @@ const HomePage: React.FC = () => {
    
   },[searchingData]);
 
-  const handlePageChange = (selectedPage: { selected: number }) => {
-    setPage(selectedPage.selected + 1);
-  };
-
-  // Enter 키 이벤트 핸들러
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && input.trim()) {
-      setPage(1);
-      setArticles([]);
-      setIsSearchActive(true); // 검색 활성화
-      setKeyword(input);
-      setInput('');
-    }
-  };
- 
   useEffect(() => { 
     const access_token = cookies.get('access_token');
     if (access_token) {
@@ -137,6 +127,42 @@ const HomePage: React.FC = () => {
     console.log(rankingData?.data);
   }, [rankingData]);
 
+  // 1초마다 순위를 바꾸는 로직
+  useEffect(() => {
+
+    if (rankingData) {
+      const interval = setInterval(() => {
+        setIsFadingIn(false);
+        setTimeout(() => {
+          setCurrentRank((prevIndex) => (prevIndex + 1) % (rankingData.data.length)); // 다음 순위
+          setIsFadingIn(true); // 페이드 인
+        }, 1200); // 페이드 아웃 애니메이션 시간과 동일
+      }, 5000); // 5초마다 순위 전환
+  
+      return () => clearInterval(interval); // 컴포넌트 언마운트 시 클리어
+    }
+    
+  }, [rankingData]);
+
+  const handlePageChange = (selectedPage: { selected: number }) => {
+    setPage(selectedPage.selected + 1);
+  };
+
+  // Enter 키 이벤트 핸들러
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && input.trim()) {
+      setPage(1);
+      setArticles([]);
+      setIsSearchActive(true); // 검색 활성화
+      setKeyword(input);
+      setInput('');
+    }
+  };
+
+  const navigateArticlePage = (id:number) => {
+    navigate(`/article/${id}`);
+  };
+  
   return (
     <Container>
       <SearchBar placeholder="검색어를 입력하세요" 
@@ -144,8 +170,9 @@ const HomePage: React.FC = () => {
         value={input}
         onKeyDown={handleKeyPress} // Enter 키 이벤트
         onChange={(e) => setInput(e.currentTarget.value)} />
-      <RankText isTitle="true">조회수 급상승 기사</RankText>
-      <RankText isTitle="false">최태원·노소영 이혼소송 대법원 간다…한숨 돌린 SK</RankText>
+      <RankText isTitle="false" isRank={false}>조회수 급상승 기사</RankText>
+      <RankText onClick={() => navigateArticlePage(rankingData?.data[currentRank]?.id)} 
+        isRank={isFadingIn} isTitle="true">{rankingData && `${currentRank + 1}.  ` + rankingData.data[currentRank]?.title}</RankText>
       <CategoryTab
         categories={categories}
         activeCategory={category}
@@ -204,13 +231,41 @@ const LoadingText = styled.p`
 `;
 
 interface IRankTextProps {
-  isTitle?: string;
+  fadeIn ?: boolean;
 }
 
-const RankText = styled.span.withConfig({
-  shouldForwardProp: (prop) => prop !== 'isTitle' // isTitle을 DOM으로 전달하지 않음
-})<IRankTextProps>`
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+`;
+
+const RankText = styled.span<{ isRank : boolean, isTitle: string }>`
+  cursor: pointer;
   margin-left: 20px;
   color: ${({ isTitle }) => (isTitle === 'true' ? '#F24D4D' : 'black')};
   font-size: 12px;
+
+  ${({ isRank, isTitle }) =>
+    isTitle && 
+    css`
+      animation: ${isRank ? fadeIn : fadeOut} 1.2s ease-in-out;
+    `}
+
 `;

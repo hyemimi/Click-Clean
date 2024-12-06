@@ -58,7 +58,9 @@ client.interceptors.response.use(
           const status = await getAccessToken(refresh_token);
 
           if (status === 401) {
-            return;
+            // 재 로그인
+            const link = `https://kauth.kakao.com/oauth/authorize?redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&response_type=code`;
+            window.location.href = link;
           }
 
         }
@@ -72,7 +74,10 @@ client.interceptors.response.use(
       } 
       catch (error: unknown) {
         // 토큰 요청 실패, 다시 로그인 해야함. 
-        
+        // 재 로그인
+        const link = `https://kauth.kakao.com/oauth/authorize?redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&client_id=${process.env.REACT_APP_KAKAO_CLIENT_ID}&response_type=code`;
+        window.location.href = link;
+  
         return Promise.reject(error);
       }
     }
