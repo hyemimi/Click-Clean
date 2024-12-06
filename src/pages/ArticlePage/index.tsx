@@ -26,23 +26,28 @@ const ArticlePage: React.FC = () => {
 
   return (
     <ArticleContainer>
-      <ArticleBadge probability={data?.data?.probability}>유사도 {data?.data?.probability}%</ArticleBadge>
-      <BookmarkDiv>
-        <img src={ScrapIC} width={16} height={18} onClick={ScrapHandler}/>
-      </BookmarkDiv>
-      <Tag>{data?.data?.category}</Tag>
-      <Title>{data?.data?.title}</Title>
-      <MetaInfo>
-        <span>{data?.data?.media}</span>
-        <span>{data?.data?.author}</span>
-      </MetaInfo>
-      <Content dangerouslySetInnerHTML={{ __html: data?.data?.body }} />
-      <Footer>
-        원문 보기: <a href={data?.data?.url} target="_blank" rel="noopener noreferrer">{data?.data?.url}</a>
-      </Footer>
-      <GrayHr />
-      {idNum && <RateSection id={idNum} />}
-      {idNum && <CommentsSection id={idNum} />}
+      {!isLoading &&  
+      <>
+        <ArticleBadge probability={data?.data?.probability}>유사도 {data?.data?.probability}%</ArticleBadge>
+        <BookmarkDiv>
+          <img src={ScrapIC} width={16} height={18} onClick={ScrapHandler}/>
+        </BookmarkDiv>
+        <Tag>{data?.data?.category}</Tag>
+        <Title>{data?.data?.title}</Title>
+        <MetaInfo>
+          <span>{data?.data?.media}</span>
+          <span>{data?.data?.author}</span>
+        </MetaInfo>
+        <Content dangerouslySetInnerHTML={{ __html: data?.data?.body }} />
+        <Footer>
+          원문 보기: <a href={data?.data?.url} target="_blank" rel="noopener noreferrer">{data?.data?.url}</a>
+        </Footer>
+        <GrayHr />
+        {idNum && <RateSection id={idNum} />}
+        {idNum && <CommentsSection id={idNum} />}
+      </>
+      }
+     
     </ArticleContainer>
   );
    
