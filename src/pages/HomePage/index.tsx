@@ -38,7 +38,9 @@ const HomePage: React.FC = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['getAllArticles',{ page, category }], // page나 category가 변경될 때마다 queryFn 실행 
     queryFn: () => getArticleList({ page, category }),
-    enabled: !isSearchActive
+    enabled: !isSearchActive,
+    staleTime: 3 * 60 * 60 * 1000,
+    refetchInterval: 3 * 60 * 60 * 1000
   });
 
   // 기사 데이터 fetching (검색어 기반)

@@ -10,7 +10,7 @@ interface ICommentsSectionProps {
 
 const CommentsSection:React.FC<ICommentsSectionProps> = ({ id }) => {
   const [userTitle, setUserTitle] = useState('');
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ['getCommentList', { id }],
     queryFn: () => getCommentList({ id })
   });
@@ -21,7 +21,7 @@ const CommentsSection:React.FC<ICommentsSectionProps> = ({ id }) => {
 
   // 댓글 등록
   const registerCommentHandler = async () => {
-    await postComment({ id, userTitle });
+    await postComment({ id, userTitle }).then(() => refetch() );
   };
 
   return (
