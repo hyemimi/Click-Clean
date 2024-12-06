@@ -35,7 +35,6 @@ const ArticlePage: React.FC = () => {
       <MetaInfo>
         <span>{data?.data?.media}</span>
         <span>{data?.data?.author}</span>
-        <span>{data?.data?.date}</span>
       </MetaInfo>
       <Content dangerouslySetInnerHTML={{ __html: data?.data?.body }} />
       <Footer>

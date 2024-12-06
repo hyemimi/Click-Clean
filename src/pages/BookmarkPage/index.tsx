@@ -38,7 +38,9 @@ const BookmarkPage = () => {
             media = {article.media}
             imageUrl= {article.imageUrl}
             summary={article.summary}
-            probability = {article.probability}/>
+            probability = {article.probability}
+            createdAt = {article.createdAt} />
+         
         ))}
       </ArticleGrid>
   

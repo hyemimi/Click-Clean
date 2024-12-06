@@ -165,6 +165,7 @@ const HomePage: React.FC = () => {
               probability = {article.probability}
               imageUrl = {article.imageUrl}
               summary = {article.summary}
+              createdAt = {article.createdAt}
             />
           )) : <LoadingText> 검색 결과가 없습니다.</LoadingText>
         }

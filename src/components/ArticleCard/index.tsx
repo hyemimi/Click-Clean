@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Badge } from 'styles/common/badge';
 import ScrapIC from 'assets/nonbookmarkIC.png';
+import Logo from '../../assets/logo.png';
+
 export interface IArticleCardProps {
     body: string,
     url?: string
@@ -12,7 +14,8 @@ export interface IArticleCardProps {
 		media: string,
 		probability: number,
     imageUrl: string,
-    summary: string
+    summary: string,
+    createdAt: string
 }
 
 // Component
@@ -24,7 +27,9 @@ const ArticleCard: React.FC<IArticleCardProps> = ({
   media,
   imageUrl,
   probability,
-  summary }) => {
+  summary,
+  createdAt
+}) => {
 
   const navigate = useNavigate();
   const ArticlePageHandler = () => {
@@ -38,6 +43,7 @@ const ArticleCard: React.FC<IArticleCardProps> = ({
       <Content>
         <Title>{ title.length >= 50 ? title.slice(0,50) + '...' : title }</Title>
         <Description>{ summary.length >= 80 ? summary.slice(0,80) + '...' : title }</Description>
+        <DateText>{new Date(createdAt).toLocaleString()}</DateText>
       </Content>
     </Card>
   );
@@ -48,7 +54,7 @@ const Card = styled.div`
   
   display: flex;
   align-items: center;
-  padding: 16px;
+  padding: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -68,7 +74,7 @@ const Thumbnail = styled.div<{ image ?: string }>`
   height: 100px;
   background-size: cover;
   background-color: #e0e0e0;
-  background-image: ${({ image }) => image ? `url(${image})` : 'none' };
+  background-image: ${({ image }) => image ? `url(${image})` : 'none'};
   background-position: center;
   margin-right: 16px;
   border-radius: 4px;
@@ -94,6 +100,14 @@ const Description = styled.p`
   margin: 4px 0 0;
   font-size: 0.6rem;
   color: #666;
+`;
+
+const DateText = styled.p`
+
+  font-weight: regular;
+  font-size: 0.6rem;
+  color: gray;
+  text-align: right;
 `;
 
 export default ArticleCard;
