@@ -172,9 +172,11 @@ const HomePage: React.FC = () => {
         value={input}
         onKeyDown={handleKeyPress} // Enter 키 이벤트
         onChange={(e) => setInput(e.currentTarget.value)} />
-      <RankText isTitle="false" isRank={false}>조회수 급상승 기사</RankText>
+      <RankText istitle="false" isrank="false">조회수 급상승 기사</RankText>
       <RankText onClick={() => navigateArticlePage(rankingData?.data[currentRank]?.id)} 
-        isRank={isFadingIn} isTitle="true">{rankingData && `${currentRank + 1}.  ` + rankingData.data[currentRank]?.title}</RankText>
+        isrank={isFadingIn ? 'true' : 'false'} istitle="true">
+        {rankingData && `${currentRank + 1}.  ` + rankingData.data[currentRank]?.title}
+      </RankText>
       <CategoryTab
         categories={categories}
         activeCategory={category}
@@ -258,16 +260,16 @@ const fadeOut = keyframes`
   }
 `;
 
-const RankText = styled.span<{ isRank : boolean, isTitle: string }>`
+const RankText = styled.span<{ isrank : string, istitle: string }>`
   cursor: pointer;
   margin-left: 20px;
-  color: ${({ isTitle }) => (isTitle === 'true' ? '#F24D4D' : 'black')};
+  color: ${({ istitle }) => (istitle === 'true' ? '#F24D4D' : 'black')};
   font-size: 12px;
 
-  ${({ isRank, isTitle }) =>
-    isTitle && 
+  ${({ isrank, istitle }) =>
+    istitle && 
     css`
-      animation: ${isRank ? fadeIn : fadeOut} 1.2s ease-in-out;
+      animation: ${isrank === 'true' ? fadeIn : fadeOut} 1.2s ease-in-out;
     `}
 
 `;

@@ -21,7 +21,7 @@ const ArticlePage: React.FC = () => {
   });
 
   const ScrapHandler = async () => {
-    const res = await postScrap({ id: idNum, value: true });
+    const res = await postScrap({ id: idNum, value: true }).then((res) => console.log(res));
   };
 
   return (

@@ -14,7 +14,7 @@ const CategoryTab: React.FC<ICategoryTabProps> = ({ categories, activeCategory, 
       {categories.map((category) => (
         <Tab
           key={category}
-          active={activeCategory === category}
+          active={activeCategory === category ? 'true' : 'false'}
           onClick={() => onCategorySelect(category)}
         >
           {category}
@@ -37,13 +37,13 @@ const Tabs = styled.div`
   }
 `;
 
-const Tab = styled.button<{ active: boolean }>`
+const Tab = styled.button<{ active: string }>`
   background: none;
   border: none;
   font-size: 16px;
   cursor: pointer;
-  color: ${({ active }) => (active ? '#007bff' : '#333')};
-  border-bottom: 2px solid ${({ active }) => (active ? '#007bff' : 'transparent')};
+  color: ${({ active }) => (active === 'true' ? '#007bff' : '#333')};
+  border-bottom: 2px solid ${({ active }) => (active === 'true' ? '#007bff' : 'transparent')};
   padding-bottom: 4px;
 
   &:hover {
