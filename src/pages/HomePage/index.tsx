@@ -124,11 +124,6 @@ const HomePage: React.FC = () => {
   
   }, [userData]);
 
-  useEffect(() => {
-
-    console.log(rankingData?.data);
-  }, [rankingData]);
-
   // 1초마다 순위를 바꾸는 로직
   useEffect(() => {
 

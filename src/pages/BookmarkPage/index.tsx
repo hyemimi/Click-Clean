@@ -5,12 +5,12 @@ import { articles } from 'temp/articles';
 import { useUserData } from 'context/UserDataProvider';
 import { useQuery } from '@tanstack/react-query';
 import { getScrapList } from 'apis/scrap';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Pagination from 'components/Pagination';
 
 const BookmarkPage = () => {
 
-  const { user } = useUserData();
+  const { user, updateUserInfo } = useUserData();
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1); 
 
@@ -23,16 +23,13 @@ const BookmarkPage = () => {
     setPage(selectedPage.selected + 1);
   };
 
-  console.log(data);
-
   return (
     <Container>
       <ArticleGrid>
-        {data?.map((article: IArticleCardProps, index: number) => (
+        {data?.data?.map((article: IArticleCardProps, index: number) => (
           <ArticleCard 
             key = {article.id}
             body = {article.body}
-            url = {article.url}
             id = {article.id}
             title = {article.title}
             media = {article.media}

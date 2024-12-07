@@ -16,17 +16,14 @@ export const postScrap = async( { id, value }: PostScrapReq) => {
 
 /** 스크랩 리스트를 얻어옵니다 */
 export const getScrapList = async( { page }: GetScrapListReq) => {
-  try {
-    const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/scraps`,
-      { params: { page, size: 12 } }
-    );
-    console.log(response.data);
 
-    return response.data;
-  }
-  catch {
-    throw new Error('get Scrap List failed');
-  }
+  const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/scrap/list`,
+    { params: { page, size: 9 } }
+  );
+  console.log(response.data);
+
+  return response.data;
+
 };
 
 /** 스크랩을 생성합니다 */

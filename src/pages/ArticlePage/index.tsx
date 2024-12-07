@@ -21,7 +21,7 @@ const ArticlePage: React.FC = () => {
   });
 
   const ScrapHandler = async () => {
-    const res = await postScrap({ id: idNum, value: true }).then((res) => console.log(res));
+    const res = await postScrap({ id: idNum, value: true }).then((res) => window.alert('저장되었습니다')).catch((err) => {window.alert('이미 저장되어 있습니다');});
   };
 
   return (

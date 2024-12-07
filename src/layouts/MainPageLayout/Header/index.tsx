@@ -27,7 +27,7 @@ const NavHeader = () => {
   };
   const LogoutPageHandler = async () => {
     console.log('로그아웃 버튼 눌렀습니다');
-    const logout = await postLogout();
+    const logout = await postLogout().catch((err) => navigate('/login'));
     console.log(logout);
 
     if (logout) {

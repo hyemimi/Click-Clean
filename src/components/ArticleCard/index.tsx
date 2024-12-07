@@ -39,7 +39,7 @@ const ArticleCard: React.FC<IArticleCardProps> = ({
   return (
     <Card onClick={ArticlePageHandler}>
       <Badge probability={probability}>유사도 {probability}%</Badge>
-      <Thumbnail image={imageUrl}/>
+      {imageUrl && <Thumbnail image={imageUrl}/>}
       <Content>
         <Title>{ title.length >= 50 ? title.slice(0,50) + '...' : title }</Title>
         <Description>{ summary.length >= 80 ? summary.slice(0,80) + '...' : title }</Description>
@@ -60,8 +60,7 @@ const Card = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
-  max-height: 110px;
+  
   &:hover {
     transform: translateY(-2px) scale(1.01);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
