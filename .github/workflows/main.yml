@@ -1,0 +1,39 @@
+name: Deploy to EC2 on Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v4
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build React app
+      run: CI=false npm run build
+      
+    - name: Create version file
+      run: |
+        echo "VERSION=${{ github.event.release.tag_name }}" > version.txt
+        echo "VERSION: ${{ github.event.release.tag_name }}" > ./build/version.txt
+        
+    - name: Copy files via SCP
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        EC2_IP: ${{ secrets.EC2_IP }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        scp -o StrictHostKeyChecking=no -r ./build/* $EC2_USER@$EC2_IP:/var/www/html/
