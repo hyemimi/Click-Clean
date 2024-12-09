@@ -1,4 +1,3 @@
-
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import MainPageLayout from '../layouts/MainPageLayout';
 import HomePage from '../pages/HomePage';
@@ -6,7 +5,6 @@ import ArticlePage from 'pages/ArticlePage';
 import BookmarkPage from 'pages/BookmarkPage';
 import SubscribePage from 'pages/SubscribePage';
 import LoginPage from 'pages/LoginPage';
-import Redirect from 'pages/Redirect';
 import UserInfoPage from 'pages/UserInfoPage';
 
 const RootRoutes = () => {

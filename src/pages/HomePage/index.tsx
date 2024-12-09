@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
   const [category, setCategory] = useState('경제');
   const [articles, setArticles] = useState([]);
   const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(0); // 전체 페이지 수 상태
+  const [totalPages, setTotalPages] = useState<number>(1); // 전체 페이지 수 상태
   const [input, setInput] = useState('');
   const [keyword, setKeyword] = useState('');
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
@@ -38,9 +38,8 @@ const HomePage: React.FC = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['getAllArticles',{ page, category }], // page나 category가 변경될 때마다 queryFn 실행 
     queryFn: () => getArticleList({ page, category }),
-    enabled: !isSearchActive,
     staleTime: 3 * 60 * 60 * 1000,
-    refetchInterval: 3 * 60 * 60 * 1000
+    enabled: !isSearchActive
   });
 
   // 기사 데이터 fetching (검색어 기반)
@@ -67,16 +66,15 @@ const HomePage: React.FC = () => {
     // 캐시된 데이터가 유지되는 시간 (3시간 동안)
   });
 
-  // 유저 데이터 업데이트 (context)
-  
+  // 카테고리 선택
   const handleCategorySelect = (category: string) => {
-    setIsSearchActive(false);
     setCategory(category);
+    setIsSearchActive(false);
   };
 
   // useEffect로 totalPages를 업데이트
   useEffect(() => {
- 
+    
     if (data?.data?.news) {
       setArticles(data?.data?.news);
       setTotalPages(data?.data?.totalPages);
@@ -92,14 +90,12 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (searchingData) {
       setArticles(searchingData?.data);
-      setTotalPages(searchingData?.totalPages);
-      console.log(articles);
+      setTotalPages(searchingData?.size);
+      setCategory('');
     } else {
       setArticles([]);
       setTotalPages(1);
     }
-    setIsSearchActive(false);
-    setKeyword('');
    
   },[searchingData]);
 

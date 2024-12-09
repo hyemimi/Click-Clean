@@ -23,6 +23,13 @@ const BookmarkPage = () => {
     setPage(selectedPage.selected + 1);
   };
 
+  useEffect(() => {
+    if (data?.size > 0) {
+      setTotalPages(data.data.length);
+    }
+  
+  }, [data]);
+
   return (
     <Container>
       <ArticleGrid>

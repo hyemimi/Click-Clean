@@ -23,7 +23,6 @@ client.interceptors.request.use(
 
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
-      console.log(config.headers.Authorization);
     }
     
     return config;
@@ -45,7 +44,6 @@ client.interceptors.response.use(
     const { config, response } = err;
     const originalConfig = config; 
   
-    console.log(response?.status);
     // 토큰 만료
     if (response?.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true;

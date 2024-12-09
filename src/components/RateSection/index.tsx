@@ -12,8 +12,7 @@ const RateSection:React.FC<IRateSectionProps> = ({ id }) => {
 
   const VoteHandler = async (value:boolean) => {
 
-    console.log(id, value);
-    await postVote({ id, value }).then(() => console.log('투표 완료'));
+    await postVote({ id, value }).then(() => window.alert('투표가 완료되었습니다'));
    
   };
 

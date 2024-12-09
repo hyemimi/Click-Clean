@@ -21,22 +21,6 @@ export const postRate = async ({ value, id }: PostRateReq) => {
   }
 };
 
-/** 기사를 제목으로 검색합니다 */
-export const getSearchArticles = async ({ input, page, size } : GetSearchArticlesReq) => {
-
-  try {
-    const response = await client.get('/news/search/title', {
-      params: { input, page, size: 10 }
-    });
-    //const response = await client.get(`/news/search/title?input=${keyword}&page=${page}&size=${size}`);
-
-    return response.data;
-  } // 응답 데이터만 반환 
-  catch (error) {
-    throw new Error('get searchArticles failed');
-  }
-};
-
 /** 기사를 평가합니다 */
 export const postScrap = async ({ id }: PostScrapReq) => {
 
@@ -114,7 +98,7 @@ export const getCommentList = async ({ id } : GetCommentListReq) => {
 /** 기사를 키워드 기반으로 검색합니다 */
 export const getSearchingList = async( { keyword, page }: GetSearchingListReq) => {
   try {
-    const response = await client.get('/api2/search',
+    const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/search`,
       { params: { keyword, page, size: 9 } }
     );
 
