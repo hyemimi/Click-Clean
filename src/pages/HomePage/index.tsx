@@ -15,7 +15,7 @@ import { useUserData } from 'context/UserDataProvider';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { getRanking } from 'apis/rank';
 
-export const categories = ['경제', '정치', '사회', '세계', 'IT/과학', '생활/문화'];
+export const categories = ['경제', '정치', '사회', '세계', 'IT/과학', '생활/문화','해외'];
 
 const HomePage: React.FC = () => {
   const [category, setCategory] = useState('경제');

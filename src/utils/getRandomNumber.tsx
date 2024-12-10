@@ -1,6 +1,6 @@
 const getRandomNumber = () => {
 
-  return Math.floor(Math.random() * (95 - 0 + 1)) + 0;
+  return Math.floor(Math.random() * (95 - 70 + 1)) + 70;
     
 };
 
