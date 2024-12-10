@@ -75,28 +75,20 @@ const HomePage: React.FC = () => {
   // useEffect로 totalPages를 업데이트
   useEffect(() => {
     
-    if (data?.data?.news) {
+    if (!isSearchActive && data?.data?.news) {
       setArticles(data?.data?.news);
+      setPage(1);
       setTotalPages(data?.data?.totalPages);
-      setPage(data?.data?.page);
-    }
-    else {
-      setArticles([]);
-      setTotalPages(1);
     }
    
   }, [data]); // data가 변경될 때마다 실행됨
 
   useEffect(() => {
-    if (searchingData?.totalPages >= 0) {
+    if (isSearchActive && searchingData?.data) {
       setArticles(searchingData?.data);
+      setPage(1);
       setTotalPages(searchingData?.totalPages - 1);
-      setPage(searchingData?.page);
       setCategory('');
-
-    } else {
-      setArticles([]);
-      setTotalPages(1);
     }
    
   },[searchingData]);
