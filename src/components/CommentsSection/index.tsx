@@ -3,6 +3,7 @@ import { getCommentList, postComment } from 'apis/article';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from 'styles/common/button';
+import getRandomNumber from 'utils/getRandomNumber';
 
 interface ICommentsSectionProps {
     id: number
@@ -38,10 +39,12 @@ const CommentsSection:React.FC<ICommentsSectionProps> = ({ id }) => {
         {data?.data.map((comment: any) => {
           return (
             <Comment key={comment.id}>
+              
               <CommentText>
                 {comment.userTitle}
               </CommentText>
               <LikeDislikeButtons>
+                <ProbabilityText>유사도: {getRandomNumber()}</ProbabilityText>
                 <LikeButton onClick={registerCommentHandler}>👍</LikeButton>
                 <DislikeButton onClick={registerCommentHandler}>👎</DislikeButton>
               </LikeDislikeButtons>
@@ -101,7 +104,12 @@ const Comment = styled.div`
 
 const CommentText = styled.p`
   flex-grow: 1;
-  font-size: 14px;
+  font-size: 0.9rem;
+`;
+
+const ProbabilityText = styled.p`
+font-size: 0.7rem;
+margin-right: 10px;
 `;
 
 const LikeDislikeButtons = styled.div`
