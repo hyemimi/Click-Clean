@@ -77,7 +77,6 @@ const HomePage: React.FC = () => {
     
     if (!isSearchActive && data?.data?.news) {
       setArticles(data?.data?.news);
-      setPage(1);
       setTotalPages(data?.data?.totalPages);
     }
    
@@ -86,7 +85,6 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     if (isSearchActive && searchingData?.data) {
       setArticles(searchingData?.data);
-      setPage(1);
       setTotalPages(searchingData?.totalPages - 1);
       setCategory('');
     }
