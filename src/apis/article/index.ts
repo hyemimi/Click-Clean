@@ -98,6 +98,7 @@ export const getCommentList = async ({ id } : GetCommentListReq) => {
 /** 기사를 키워드 기반으로 검색합니다 */
 export const getSearchingList = async( { keyword, page }: GetSearchingListReq) => {
   try {
+
     const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/search`,
       { params: { keyword, page, size: 9 } }
     );

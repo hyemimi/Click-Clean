@@ -20,7 +20,6 @@ export const getScrapList = async( { page }: GetScrapListReq) => {
   const response = await client.get(`${process.env.REACT_APP_BACK2_URL}/api/scrap/list`,
     { params: { page, size: 9 } }
   );
-  console.log(response.data);
 
   return response.data;
 

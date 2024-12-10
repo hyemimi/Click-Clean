@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getScrapList } from 'apis/scrap';
 import { useEffect, useState } from 'react';
 import Pagination from 'components/Pagination';
+import styled from 'styled-components';
 
 const BookmarkPage = () => {
 
@@ -25,7 +26,8 @@ const BookmarkPage = () => {
 
   useEffect(() => {
     if (data?.size > 0) {
-      setTotalPages(data.data.length);
+      setPage(data?.page);
+      setTotalPages(data?.totalPages - 1);
     }
   
   }, [data]);
@@ -44,13 +46,22 @@ const BookmarkPage = () => {
             summary={article.summary}
             probability = {article.probability}
             createdAt = {article.createdAt} />
-         
+        
         ))}
       </ArticleGrid>
-  
       <Pagination pageCount={totalPages} onPageChange={handlePageChange}/>
     </Container>
   );
 };
 
 export default BookmarkPage;
+
+const Text = styled.p`
+  align-items: center;
+  font-size: 1.8rem;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+   transform: translate(-50%, -50%);
+   position: absolute;
+`;

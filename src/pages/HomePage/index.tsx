@@ -88,10 +88,12 @@ const HomePage: React.FC = () => {
   }, [data]); // data가 변경될 때마다 실행됨
 
   useEffect(() => {
-    if (searchingData) {
+    if (searchingData?.totalPages >= 0) {
       setArticles(searchingData?.data);
-      setTotalPages(searchingData?.size);
+      setTotalPages(searchingData?.totalPages - 1);
+      setPage(searchingData?.page);
       setCategory('');
+
     } else {
       setArticles([]);
       setTotalPages(1);
@@ -145,7 +147,6 @@ const HomePage: React.FC = () => {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && input.trim()) {
       setPage(1);
-      setArticles([]);
       setIsSearchActive(true); // 검색 활성화
       setKeyword(input);
       setInput('');
@@ -174,23 +175,26 @@ const HomePage: React.FC = () => {
         onCategorySelect={handleCategorySelect}
       />
       <ArticleGrid>
-        
-        {
-          articles ? articles.map((article: IArticleCardProps, index: any) => (
-            <ArticleCard 
-              key = {article.id}
-              body = {article.body}
-              url = {article.url}
-              id = {article.id}
-              title = {article.title}
-              media = {article.media}
-              probability = {article.probability}
-              imageUrl = {article.imageUrl}
-              summary = {article.summary}
-              createdAt = {article.createdAt}
-            />
-          )) : <LoadingText> 검색 결과가 없습니다.</LoadingText>
-        }
+        {!isLoading && !isSearchingLoading && articles ? (
+          articles.length > 0 ? (
+            articles.map((article: IArticleCardProps, index: any) => (
+              <ArticleCard
+                key={article.id}
+                body={article.body}
+                url={article.url}
+                id={article.id}
+                title={article.title}
+                media={article.media}
+                probability={article.probability}
+                imageUrl={article.imageUrl}
+                summary={article.summary}
+                createdAt={article.createdAt}
+              />
+            ))
+          ) : (
+            <LoadingText>검색 결과가 없습니다.</LoadingText>
+          )
+        ) : null}
       </ArticleGrid>
       <Pagination pageCount={totalPages} onPageChange={handlePageChange}/>
     </Container>
@@ -217,7 +221,7 @@ const SearchBar = styled.input`
 
 const LoadingText = styled.p`
   align-items: center;
-  font-size: 24px;
+  font-size: 1.4rem;
   text-align: center;
   top: 50%;
   left: 50%;
