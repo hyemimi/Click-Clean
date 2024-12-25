@@ -2,11 +2,11 @@
 ![image](https://github.com/user-attachments/assets/22248ffc-a358-4749-bbbf-dbbb93b0bdd8)
 
 ## 목차
-1. [About the Project](#1-About-the-Project)
-2. [Main Features](#2-Main-Features)
-3. [Software Architecture](#3-Software-Architecture)
-4. [Demo](#4-Demo)
-5. [Members](#5-Members)
+1. [About the Project](#about-the-project)
+2. [Main Features](#main-features)
+3. [Software Architecture](#software-architecture)
+4. [Demo](#demo)
+5. [Members](#members)
 
 ## About the Project
 
