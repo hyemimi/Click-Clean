@@ -8,14 +8,14 @@
 4. [Demo](#4-Demo)
 5. [Members](#5-Members)
 
-## ✨ About the Project
+## About the Project
 
 조회수를 늘리기 위해 자극적이고 과장된 제목을 사용해 클릭을 유도하는 기사를 낚시성 기사(Clickbait)라고 합니다. <br/>
 이러한 기사는 혼란을 야기하며 불필요한 시간 낭비를 초래할 뿐만 아니라 여론을 왜곡합니다. <br />
 Click-Clean은 이러한 기사를 필터링하여 신뢰할 수 있는 뉴스 기사를 제공하는 뉴스 플랫폼입니다. <br />
 제목과 본문의 일치도를 판단하는 머신러닝 모델을 구축하여 낚시성 확률을 계산합니다.
 
-## 🚀 Main Features
+## Main Features
 
 ### 1. 로그인
 - **카카오 소셜 로그인**
@@ -38,13 +38,13 @@ Click-Clean은 이러한 기사를 필터링하여 신뢰할 수 있는 뉴스 �
 ### 5. 구독
 - **카테고리, 언론사 구독**: 이메일을 입력 받아 정해진 시간 내 유사도가 높은(낚시성 확률이 낮은) 최신 기사를 전송합니다.
 
-## 🛠️ Software Architecture
+## Software Architecture
 ![image](https://github.com/user-attachments/assets/8cd61928-ab25-43e2-bfd0-f4865d853318)
 
-## 🖥️ Demo
+## Demo
 [데모 영상 바로가기](https://youtu.be/NlK-z6T368w)
 
-## 📬 Members
+## Members
 - **머신러닝, 크롤링**: 양경식
 - **백엔드**: 김현원, 천현우
 - **프론트엔드**: 이혜미 ✉️ [hyemi7375@gmail.com](mailto:hyemi7375@gmail.com)
